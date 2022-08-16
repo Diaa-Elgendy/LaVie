@@ -12,9 +12,8 @@ ThemeData getApplicationTheme() {
       primaryColor: ColorManager.primary,
       primaryColorLight: ColorManager.primaryLight,
       splashColor: ColorManager.primaryLight,
-      backgroundColor: ColorManager.offWhite,
-      scaffoldBackgroundColor: ColorManager.offWhite,
-
+      backgroundColor: ColorManager.white,
+      scaffoldBackgroundColor: ColorManager.white,
       //AppBar theme
       appBarTheme: AppBarTheme(
         color: ColorManager.offWhite,
@@ -32,7 +31,7 @@ ThemeData getApplicationTheme() {
       //Card view theme
       cardTheme: CardTheme(
           color: ColorManager.white,
-          elevation: 0,
+          elevation: AppSize.elevation,
           shadowColor: Colors.grey,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppSize.borderRadius))),
@@ -85,9 +84,9 @@ ThemeData getApplicationTheme() {
         errorStyle: getRegularStyle(),
         enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(
-                color: ColorManager.textColorLight, width: AppSize.borderWidth),
+                color: ColorManager.greyLight, width: AppSize.borderWidth),
             borderRadius:
-                BorderRadius.all(Radius.circular(AppSize.borderRadius))),
+                BorderRadius.all(Radius.circular(AppSize.borderRadius),)),
         focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(
                 color: ColorManager.primary, width: AppSize.borderWidth),
@@ -105,8 +104,8 @@ ThemeData getApplicationTheme() {
                 const BorderRadius.all(Radius.circular(AppSize.borderRadius))),
       ),
       dividerTheme: const DividerThemeData(
-        color: ColorManager.textColorLight,
+        color: ColorManager.greyLight,
         thickness: 0.2,
         space: 25,
-      ));
+      ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: ColorManager.primary));
 }

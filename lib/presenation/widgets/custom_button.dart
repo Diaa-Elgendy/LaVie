@@ -8,7 +8,6 @@ import 'package:la_vie/presenation/resources/values_manager.dart';
 class CustomButton extends StatelessWidget {
   String text;
   double fontSize;
-  double width;
   double height;
   VoidCallback function;
   bool fullWidth;
@@ -18,35 +17,31 @@ class CustomButton extends StatelessWidget {
       required this.text,
       required this.function,
       this.fontSize = FontSize.f20,
-      this.width = AppSize.buttonWidth,
       this.height = AppSize.buttonHeight,
       this.fullWidth = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: width,
-          height: height,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppSize.borderRadius),
-            color: ColorManager.primary,
-          ),
-          child: MaterialButton(
-            onPressed: function,
-            child: Text(
-              text,
-              style: getMediumStyle(
-                color: Colors.white,
-                fontSize: fontSize,
-              ),
+    return FractionallySizedBox(
+      widthFactor: 0.9,
+      child: Container(
+        height: height,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppSize.borderRadius),
+          color: ColorManager.primary,
+        ),
+        child: MaterialButton(
+          onPressed: function,
+          child: Text(
+            text,
+            style: getMediumStyle(
+              color: Colors.white,
+              fontSize: fontSize,
             ),
           ),
-        )
-      ],
+        ),
+      ),
     );
   }
 }

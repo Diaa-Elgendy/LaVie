@@ -1,21 +1,17 @@
 class AppPadding{
   static const double textFormFieldPadding = 8.0;
-  static const double textFormFieldContentPadding = 14.0;
   static const double screenPadding = 18.0;
   static const double cardPadding = 15;
-  static const double bottomSheetPadding = 10;
 }
 
 class AppSize{
   static const double borderWidth = 0.7;
-  static const double borderRadius = 14;
-  static const double profileCardBorderRadius = 12;
+  static const double borderRadius = 10;
   static const double buttonHeight = 45;
   static const double buttonWidth = 240;
   static const double buttonFontSize = 20;
   static const double appBarElevation = 0;
-  static const double joinedCircleSize = 55;
-  static const double joinedCircleBorderSize = 27;
+  static const double elevation = 2;
 
   static const double s1_5 = 1.5;
   static const double s2 = 2.0;
