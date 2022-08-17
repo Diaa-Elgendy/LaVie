@@ -7,6 +7,7 @@ import 'package:la_vie/presenation/resources/values_manager.dart';
 
 class CustomButton extends StatelessWidget {
   String text;
+  Widget child;
   double fontSize;
   double height;
   VoidCallback function;
@@ -14,7 +15,8 @@ class CustomButton extends StatelessWidget {
 
   CustomButton(
       {Key? key,
-      required this.text,
+        this.text = '',
+        this.child = const SizedBox(height: 0, width: 0),
       required this.function,
       this.fontSize = FontSize.f20,
       this.height = AppSize.buttonHeight,
@@ -33,13 +35,13 @@ class CustomButton extends StatelessWidget {
         ),
         child: MaterialButton(
           onPressed: function,
-          child: Text(
+          child: text.isNotEmpty ? Text(
             text,
             style: getMediumStyle(
               color: Colors.white,
               fontSize: fontSize,
             ),
-          ),
+          ): child,
         ),
       ),
     );

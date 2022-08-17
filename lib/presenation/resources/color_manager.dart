@@ -9,6 +9,8 @@ class ColorManager {
   static const Color offWhite = Color(0xfffafafa);
   static const Color grey = Color(0xff8A8A8A);
   static const Color greyLight = Color(0xfff8f8f8);
+  static const Color textColor = Color(0xff3a3a3a);
+
   // static const Color textColor = Color(0xff545454);
   // static const Color textColorLight = Color(0xff9f9f9f);
 

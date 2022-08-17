@@ -3,7 +3,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:la_vie/business_logic/enums.dart';
+import 'package:la_vie/app/enums.dart';
 import 'package:la_vie/presenation/resources/color_manager.dart';
 import 'package:la_vie/presenation/resources/font_manager.dart';
 import 'package:la_vie/presenation/resources/style_manager.dart';

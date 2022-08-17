@@ -9,7 +9,7 @@ TextStyle _getTextStyle(
 
 //Regular text style
 TextStyle getRegularStyle(
-    {double fontSize = FontSize.f16, Color color = ColorManager.grey}) {
+    {double fontSize = FontSize.f16, Color color = ColorManager.textColor}) {
   return TextStyle(
       fontWeight: FontWeightManger.regular,
       fontSize: fontSize,
@@ -19,7 +19,7 @@ TextStyle getRegularStyle(
 
 //Regular text style
 TextStyle  getMediumStyle(
-    {double fontSize = FontSize.f16, Color color = ColorManager.grey}) {
+    {double fontSize = FontSize.f16, Color color = ColorManager.textColor}) {
   return TextStyle(
       fontWeight: FontWeightManger.medium,
       fontSize: fontSize,
@@ -32,7 +32,7 @@ TextStyle  getMediumStyle(
 TextStyle getAppBarStyle(){
   return getSemiBoldStyle(
     fontSize: FontSize.f18,
-    color: ColorManager.grey,
+    color: ColorManager.textColor,
   );
 }
 
@@ -44,7 +44,7 @@ TextStyle getBoldStyle({double fontSize = FontSize.f16, required Color color}) {
 
 //SemiBold text style
 TextStyle getSemiBoldStyle(
-    {double fontSize = FontSize.f16, Color color =  ColorManager.grey}) {
+    {double fontSize = FontSize.f16, Color color =  ColorManager.textColor}) {
   return TextStyle(
       fontWeight: FontWeightManger.semiBold,
       fontSize: fontSize,

@@ -2,7 +2,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:la_vie/presenation/resources/assets_manager.dart';
 import 'package:la_vie/presenation/resources/color_manager.dart';
-import 'package:la_vie/presenation/screens/login_screen.dart';
+import 'package:la_vie/presenation/screens/authorize/authorize_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -11,7 +11,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
       splash: Image.asset(AssetsManager.logo, width: 180),
-      nextScreen: const LoginScreen(),
+      nextScreen: const AuthorizeScreen(),
       backgroundColor: ColorManager.offWhite,
       centered: true,
       duration: 2000,

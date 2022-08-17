@@ -5,7 +5,7 @@ class AppPadding{
 }
 
 class AppSize{
-  static const double borderWidth = 0.7;
+  static const double borderWidth = 2;
   static const double borderRadius = 10;
   static const double buttonHeight = 45;
   static const double buttonWidth = 240;

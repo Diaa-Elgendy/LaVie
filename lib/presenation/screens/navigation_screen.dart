@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:la_vie/presenation/resources/assets_manager.dart';
 import 'package:la_vie/presenation/resources/color_manager.dart';
-import 'package:la_vie/presenation/screens/home_screen.dart';
+import 'package:la_vie/presenation/screens/home/home_screen.dart';
 import 'package:la_vie/presenation/screens/notification_screen.dart';
 
 class NavigationScreen extends StatefulWidget {
@@ -15,12 +15,12 @@ class NavigationScreen extends StatefulWidget {
 }
 
 class _NavigationScreenState extends State<NavigationScreen> {
-  int _page = 0;
+  int _page = 2;
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   final screens = [
+    const NotificationScreen(),
+    const NotificationScreen(),
     const HomeScreen(),
-    const NotificationScreen(),
-    const NotificationScreen(),
     const NotificationScreen(),
     const NotificationScreen(),
   ];
@@ -30,7 +30,6 @@ class _NavigationScreenState extends State<NavigationScreen> {
       body: screens[_page],
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: ColorManager.primary,
-
         key: _bottomNavigationKey,
         height: 55,
         items: [
