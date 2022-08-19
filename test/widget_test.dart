@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:la_vie/app/app.dart';
+import 'package:la_vie/view/screens/app.dart';
 
 import 'package:la_vie/main.dart';
 

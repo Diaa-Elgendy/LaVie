@@ -30,7 +30,9 @@ dependencies:
   bloc: ^7.0.0
   flutter_bloc: ^7.0.0
   bloc_provider: ^0.8.0
-
+  pin_code_fields: ^7.4.0
+  radio_group_v2: ^1.0.2
+  shared_preferences: ^2.0.15
 
 
 dev_dependencies:
