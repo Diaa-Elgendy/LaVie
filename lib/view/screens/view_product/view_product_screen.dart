@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:la_vie/view/resources/assets_manager.dart';
 import 'package:la_vie/view/resources/color_manager.dart';
 import 'package:la_vie/view/resources/font_manager.dart';
@@ -6,19 +7,20 @@ import 'package:la_vie/view/resources/style_manager.dart';
 import 'package:la_vie/view/screens/view_product/view_product_component.dart';
 import 'package:la_vie/view/widgets/components.dart';
 import 'package:la_vie/view/widgets/custom_button.dart';
+import 'package:la_vie/view_model/cart_cubit/cart_cubit.dart';
+import '../../../model/cart/cart_Model.dart';
 import '../../resources/values_manager.dart';
 
 class ViewProductScreen extends StatefulWidget {
   var data;
-
-  ViewProductScreen({required this.data, Key? key}) : super(key: key);
+  int quantity;
+  ViewProductScreen({required this.data,required this.quantity, Key? key}) : super(key: key);
 
   @override
   State<ViewProductScreen> createState() => _ViewProductScreenState();
 }
 
 class _ViewProductScreenState extends State<ViewProductScreen> {
-  int quantity = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -31,18 +33,35 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
       type = widget.data.tool;
     }
 
+    //todo: apply cart functionalities here
+
     return Scaffold(
-      appBar: AppBar(),
       body: ListView(
         children: [
-          SizedBox(
-            height: 300,
-            child: CustomNetworkImage(
-              image: type.imageUrl,
-              radius: 0,
-              fit: BoxFit.fill,
-            ),
+          Stack(
+            children: [
+              SizedBox(
+                height: 350,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
+                child: CustomNetworkImage(
+                  image: type.imageUrl,
+                  radius: 0,
+                  fit: BoxFit.fill,
+                ),
+              ),
+              AppBar(
+                backgroundColor: Colors.transparent,
+                iconTheme: const IconThemeData(
+                    color: ColorManager.white
+                ),
+              ),
+
+            ],
           ),
+
           Space(),
           Padding(
             padding: const EdgeInsets.all(AppPadding.screenPadding),
@@ -109,77 +128,98 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
                 const Divider(color: ColorManager.primaryLight, thickness: 0.5),
                 Space(),
 
-                Row(
-                  children: [
-                    Text(
-                      'Qty: ',
-                      style: getMediumStyle(fontSize: FontSize.f20),
-                    ),
-                    Space(),
-                    Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        color: ColorManager.greyLight,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                      child: IconButton(
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                        onPressed: () {
-                          if (quantity>0) {
-                            setState(() {
-                              quantity--;
-                            });
-                          }
-                        },
-                        icon: const Icon(
-                          Icons.remove,
-                          color: ColorManager.grey,
-                          size: 16,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      '  $quantity  ',
-                      style: getSemiBoldStyle(fontSize: FontSize.f18),
-                    ),
-                    Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        color: ColorManager.greyLight,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                      child: IconButton(
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                        onPressed: () {
-                          setState(() {
-                            quantity++;
-                          });
-                        },
-                        icon: const Icon(
-                          Icons.add,
-                          color: ColorManager.grey,
-                          size: 16,
-                        ),
-                        color: ColorManager.greyLight,
-                      ),
-                    ),
-                  ],
-                ),
-                Space(height: 30),
+                //Quantity and add to cart
+                BlocBuilder<CartCubit, CartState>(
+                  builder: (context, state) {
+                    CartCubit cartCubit = BlocProvider.of(context);
+                    return Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'Qty: ',
+                              style: getMediumStyle(fontSize: FontSize.f20),
+                            ),
+                            Space(),
+                            Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: ColorManager.greyLight,
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                constraints: const BoxConstraints(),
+                                onPressed: () {
+                                  if (widget.quantity > 0) {
+                                    widget.quantity--;
+                                  }
+                                  cartCubit.changeCount(widget.data.productId, widget.quantity);
+                                },
+                                icon: const Icon(
+                                  Icons.remove,
+                                  color: ColorManager.grey,
+                                  size: 16,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              '  ${widget.quantity}  ',
+                              style: getSemiBoldStyle(fontSize: FontSize.f18),
+                            ),
+                            Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: ColorManager.greyLight,
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                constraints: const BoxConstraints(),
+                                onPressed: () {
+                                    widget.quantity++;
+                                  cartCubit.changeCount(widget.data.productId, widget.quantity);
 
-                Center(
-                  child: FractionallySizedBox(
-                    widthFactor: 0.9,
-                    child: CustomButton(
-                      function: () {},
-                      text: 'ADD TO CART',
-                    ),
-                  ),
-                ),
+                                },
+                                icon: const Icon(
+                                  Icons.add,
+                                  color: ColorManager.grey,
+                                  size: 16,
+                                ),
+                                color: ColorManager.greyLight,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Space(height: 30),
+                        Center(
+                          child: FractionallySizedBox(
+                            widthFactor: 0.9,
+                            child: CustomButton(
+                              function: () {
+                                cartCubit.addToCart(
+                                  CartModel(
+                                    id: widget.data.productId,
+                                    name: type.name,
+                                    image: type.imageUrl,
+                                    price: widget.data.price,
+                                    count: widget.quantity,
+                                  ),
+                                ).then((value){
+                                  Navigator.of(context).pop(widget.quantity);
+                                });
+                              },
+                              text: 'ADD TO CART',
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                )
+
               ],
             ),
           )
@@ -188,3 +228,6 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
     );
   }
 }
+/*
+
+ */

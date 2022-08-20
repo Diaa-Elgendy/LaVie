@@ -22,7 +22,6 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileCubit, ProfileState>(
       listener: (context, state) {
-        // TODO: implement listener
       },
       builder: (context, state) {
         ProfileCubit cubit = BlocProvider.of(context);

@@ -26,7 +26,6 @@ dependencies:
   badges: ^2.0.3
   group_radio_button: ^1.2.0
   dio: ^4.0.6
-
   bloc: ^7.0.0
   flutter_bloc: ^7.0.0
   bloc_provider: ^0.8.0

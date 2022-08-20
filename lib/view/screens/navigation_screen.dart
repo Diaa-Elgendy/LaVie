@@ -1,6 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:la_vie/view/screens/blogs_screen.dart';
+import 'package:la_vie/view/screens/blogs/blogs_screen.dart';
 import 'package:la_vie/view/screens/notification_screen.dart';
 import 'package:la_vie/view/screens/profile/profile_screen.dart';
 import 'package:la_vie/view/widgets/components.dart';
@@ -40,6 +40,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
       ),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 10,

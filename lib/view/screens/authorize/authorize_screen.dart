@@ -40,7 +40,6 @@ class _AuthorizeScreenState extends State<AuthorizeScreen>
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      //Todo center screen
                       Space(height: 100),
 
                       Image.asset(

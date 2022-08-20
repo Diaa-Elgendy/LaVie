@@ -3,7 +3,6 @@ import 'package:la_vie/view/resources/assets_manager.dart';
 import 'package:la_vie/view/resources/color_manager.dart';
 import 'package:la_vie/view/resources/font_manager.dart';
 import 'package:la_vie/view/resources/values_manager.dart';
-
 import '../resources/style_manager.dart';
 import '../widgets/components.dart';
 
@@ -18,7 +17,7 @@ class NotificationScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          Space(height: 30),
+          Space(height: 20),
           Padding(
             padding: const EdgeInsets.only(
                 left: AppPadding.screenPadding,
@@ -64,7 +63,7 @@ class NotificationScreen extends StatelessWidget {
             child: Row(
               children: [
                 Image.asset(
-                  AssetsManager.user1,
+                  AssetsManager.user2,
                   width: 32,
                   height: 32,
                 ),
@@ -77,14 +76,16 @@ class NotificationScreen extends StatelessWidget {
                         'Joy Arnold left 6 comments on Your Post',
                         style: getMediumStyle(fontSize: FontSize.f14),
                       ),
-                      Space(height: 5),
+                      Space(height: 10),
                       IntrinsicHeight(
                         child: Row(
                           children: [
                             const VerticalDivider(
                               thickness: 2,
+                              width: 2,
                               color: ColorManager.borderColor,
                             ),
+                            Space(),
                             Expanded(
                               child: Text(
                                 '“ leaves are an integral part of the stem system. They are attached by a continuous vascular system to the rest of the plant so that free exchange of nutrients.”',
@@ -94,7 +95,7 @@ class NotificationScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Space(height: 5),
+                      Space(height: 10),
                       Text('Yesterday at 11:42 PM',
                           style: getRegularStyle(
                               fontSize: FontSize.f14, color: Colors.grey)),

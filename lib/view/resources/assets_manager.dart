@@ -19,6 +19,9 @@ class AssetsManager{
   static const String editIcon = 'assets/images/edit_icon.png';
   static const String user1 = 'assets/images/user1.png';
   static const String user2 = 'assets/images/user2.png';
+  static const String clipboard = 'assets/images/clipboard.png';
+  static const String cartDummy = 'assets/images/cart_dummy.png';
+  static const String singleBlog = 'assets/images/single_blog.png';
 
 
 

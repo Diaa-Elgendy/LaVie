@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:la_vie/model/cart/cart_Model.dart';
 import 'package:la_vie/view/resources/assets_manager.dart';
 import 'package:la_vie/view/resources/style_manager.dart';
 import 'package:la_vie/view/resources/values_manager.dart';
@@ -8,6 +9,8 @@ import 'package:la_vie/view/screens/view_product/view_product_screen.dart';
 import 'package:la_vie/view/widgets/components.dart';
 import 'package:la_vie/view_model/app/functions.dart';
 import 'package:la_vie/view_model/authorize_cubit/authorize_cubit.dart';
+import 'package:la_vie/view_model/cart_cubit/cart_cubit.dart';
+import 'package:la_vie/view_model/cart_cubit/cart_cubit.dart';
 import 'package:la_vie/view_model/shared_pref/cache_helper.dart';
 import 'package:la_vie/view_model/shared_pref/cache_manager.dart';
 import '../../../model/home/plant_model.dart';
@@ -24,35 +27,53 @@ import '../../widgets/custom_button.dart';
 import '../../widgets/custom_textfield.dart';
 import '../navigation_screen.dart';
 
-class HomeCard extends StatelessWidget {
+class HomeCard extends StatefulWidget {
   var data;
 
   HomeCard({Key? key, required this.data}) : super(key: key);
 
   @override
+  State<HomeCard> createState() => _HomeCardState();
+}
+
+class _HomeCardState extends State<HomeCard> {
+  int count = 1;
+
+  @override
   Widget build(BuildContext context) {
     var type;
 
-    if (data.type == 'PLANT') {
-      type = data.plant;
-    } else if (data.type == 'SEED') {
-      type = data.seed;
-    } else if (data.type == 'TOOL') {
-      type = data.tool;
+    if (widget.data.type == 'PLANT') {
+      type = widget.data.plant;
+    } else if (widget.data.type == 'SEED') {
+      type = widget.data.seed;
+    } else if (widget.data.type == 'TOOL') {
+      type = widget.data.tool;
     }
 
     return Card(
       child: InkWell(
-        onTap: () =>
-            navigateTo(context: context, widget: ViewProductScreen(data: data)),
+        onTap: () async{
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) =>  ViewProductScreen(data: widget.data, quantity: count)),
+          );
+            setState((){
+
+            count = result;
+            });
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               child: CustomNetworkImage(image: type.imageUrl!),
             ),
-             Padding(
-              padding:const EdgeInsets.only(left: AppPadding.cardPadding,right: AppPadding.cardPadding,bottom: AppPadding.cardPadding),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: AppPadding.cardPadding,
+                  right: AppPadding.cardPadding,
+                  bottom: AppPadding.cardPadding),
               child: Column(
                 children: [
                   Space(),
@@ -71,7 +92,7 @@ class HomeCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          '${data.price} EGP    '.toUpperCase(),
+                          '${widget.data.price} EGP    '.toUpperCase(),
                           style: getRegularStyle(fontSize: FontSize.f14),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -85,7 +106,13 @@ class HomeCard extends StatelessWidget {
                         child: IconButton(
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
-                          onPressed: () {},
+                          onPressed: () {
+                            if (count > 0) {
+                              setState(() {
+                                count--;
+                              });
+                            }
+                          },
                           icon: const Icon(
                             Icons.remove,
                             color: ColorManager.grey,
@@ -94,7 +121,7 @@ class HomeCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '  1  ',
+                        '  $count  ',
                         style: getMediumStyle(fontSize: FontSize.f14),
                       ),
                       Container(
@@ -105,7 +132,11 @@ class HomeCard extends StatelessWidget {
                         child: IconButton(
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              count++;
+                            });
+                          },
                           icon: const Icon(
                             Icons.add,
                             color: ColorManager.grey,
@@ -117,17 +148,32 @@ class HomeCard extends StatelessWidget {
                     ],
                   ),
                   Space(),
-                  Center(
-                      child: CustomButton(
-                        text: 'Add To Card',
-                        function: () {},
-                        fontSize: FontSize.f14,
-                        height: 35,
-                      ))
+                  BlocBuilder<CartCubit, CartState>(
+                    builder: (context, state) {
+                    CartCubit cartCubit = BlocProvider.of(context);
+                      return Center(
+                          child: CustomButton(
+                            text: 'Add To Card',
+                            function: () {
+                              cartCubit.addToCart(
+                                CartModel(
+                                  id: widget.data.productId,
+                                  name: type.name,
+                                  image: type.imageUrl,
+                                  price: widget.data.price,
+                                  count: count,
+                                ),
+                              );
+                              //print(cartCubit.cartList.length);
+                            },
+                            fontSize: FontSize.f14,
+                            height: 35,
+                          ));
+                    },
+                  )
                 ],
               ),
             ),
-
           ],
         ),
       ),

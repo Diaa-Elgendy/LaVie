@@ -123,7 +123,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     Space(),
 
                     FractionallySizedBox(
-                      widthFactor: 0.8,
+                      widthFactor: 1,
                       child: CustomButton(
                         function: () {
                           if (formKey.currentState!.validate()) {

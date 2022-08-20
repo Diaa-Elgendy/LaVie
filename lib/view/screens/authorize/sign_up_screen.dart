@@ -48,7 +48,6 @@ class SignUpScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Space(),
-                  //todo: add FirstName and LastName textEditingController in the same row.
                   Row(
                     children: [
                       Expanded(
