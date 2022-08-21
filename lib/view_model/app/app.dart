@@ -4,7 +4,9 @@ import 'package:la_vie/view/resources/theme_manager.dart';
 import 'package:la_vie/view/screens/forums/forums_screen.dart';
 import 'package:la_vie/view/screens/splash_screen.dart';
 import 'package:la_vie/view/screens/test_screen.dart';
+import 'package:la_vie/view_model/blogs_cubit/blogs_cubit.dart';
 import 'package:la_vie/view_model/cart_cubit/cart_cubit.dart';
+import 'package:la_vie/view_model/forums_cubit/forums_cubit.dart';
 import 'package:la_vie/view_model/home_cubit/home_cubit.dart';
 import 'package:la_vie/view_model/proile_cubit/profile_cubit.dart';
 
@@ -21,13 +23,16 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (BuildContext context) => HomeCubit()..getProducts()),
         BlocProvider(create: (BuildContext context) => ProfileCubit()..getCurrentUser()),
         BlocProvider(create: (BuildContext context) => CartCubit()..getTotalPrice()),
+        BlocProvider(create: (BuildContext context) => ForumsCubit()..getMyForums()),
+        BlocProvider(create: (BuildContext context) => BlogsCubit()),
       ],
       child: MaterialApp(
         title: 'La Vie',
         theme: getApplicationTheme(),
         debugShowCheckedModeBanner: false,
+
         home: const SplashScreen(),
-        //home: const ForumsScreen(),
+        //home: ForumsScreen(),
       ),
     );
   }

@@ -22,6 +22,7 @@ class AssetsManager{
   static const String clipboard = 'assets/images/clipboard.png';
   static const String cartDummy = 'assets/images/cart_dummy.png';
   static const String singleBlog = 'assets/images/single_blog.png';
+  static const String likeIcon = 'assets/images/icons/like_icon.png';
 
 
 

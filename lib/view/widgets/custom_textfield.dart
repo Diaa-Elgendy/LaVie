@@ -146,9 +146,12 @@ class CustomTextField extends StatelessWidget {
           keyboardType: textInputType,
           style: getRegularStyle(),
           controller: controller,
+
           obscureText: isPassword,
           minLines: 1,
-          maxLines: maxLines,
+
+          maxLines: textFieldType == TextFieldType.multiLine ? null : maxLines,
+
           textAlignVertical: TextAlignVertical.center,
           onTap: onTap,
           cursorColor: ColorManager.primary,

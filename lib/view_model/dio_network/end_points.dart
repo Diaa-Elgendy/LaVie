@@ -19,4 +19,9 @@ class EndPoint {
   //User profile
   static const String getCurrentUser = '/api/v1/user/me';
   static const String updateCurrentUser = '/api/v1/user/me';
+
+  //Forums
+  static const String createNewPost = '/api/v1/forums';
+  static const String getForums = '/api/v1/forums/me';
+  static const String getForumByTitle = '/api/v1/forums/me';
 }

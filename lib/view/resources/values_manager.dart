@@ -8,7 +8,7 @@ class AppSize{
   static const double borderWidth = 2;
   static const double textFormFieldBorder = 1;
   static const double borderRadius = 10;
-  static const double buttonHeight = 45;
+  static const double buttonHeight = 50;
   static const double buttonWidthFactor = 0.8;
   static const double buttonFontSize = 20;
   static const double appBarElevation = 0;

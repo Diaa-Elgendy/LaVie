@@ -24,6 +24,7 @@ class AuthorizeCubit extends Cubit<AuthorizeState> {
       required String firstName,
       required String lastName}) async {
     emit(SignupLoading());
+
     return await DioHelper.postData(
       endPoint: EndPoint.signUp,
       data: {
