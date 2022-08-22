@@ -1,4 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:la_vie/view/resources/routes_manager.dart';
+import 'package:la_vie/view/screens/authorize/authorize_screen.dart';
+import 'package:la_vie/view/screens/home/home_screen.dart';
+import 'package:la_vie/view_model/dio_network/dio_helper.dart';
 import '../../view/resources/color_manager.dart';
 import '../app/functions.dart';
 
@@ -10,15 +14,11 @@ class Exceptions {
       if (error.type == DioErrorType.connectTimeout) {
         showToast('Connection Timeout', ColorManager.toastError);
       }
-
-      // (token expired)
-      // else if (dioError.response!.statusCode == 500) {
-      //   showToast('Credits expired, please login again', ColorManager.toastError);
-      //   Navigator.pushReplacementNamed(context, RoutesManager.loginRoute);
-      //   CacheHelper.clearData();
+      
+      // if (error.response!.data['message'].toString() == 'Unauthorized') {
+      //   navigateAndFinish(context, AuthorizeScreen());
       // }
-
-
+      
       //print(dioError.response!.data['message'].toString());
 
       if (error.response!.data['message'].isNotEmpty) {

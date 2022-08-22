@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:la_vie/model/blogs/blogs_model.dart';
 import 'package:la_vie/view/resources/color_manager.dart';
 import 'package:la_vie/view/resources/routes_manager.dart';
 import 'package:la_vie/view/screens/blogs/single_blog_screen.dart';
@@ -9,7 +10,8 @@ import '../../resources/style_manager.dart';
 import '../../resources/values_manager.dart';
 
 class BlogsItem extends StatelessWidget {
-  const BlogsItem({Key? key}) : super(key: key);
+  BlogsPlants blogsPlants;
+  BlogsItem({required this.blogsPlants, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class BlogsItem extends StatelessWidget {
       child: Card(
         child: InkWell(
           borderRadius: BorderRadius.circular(AppSize.borderRadius),
-          onTap: () => navigateTo(context: context, widget: SingleBlogScreen()),
+          onTap: () => navigateTo(context: context, widget: SingleBlogScreen(blogsPlants: blogsPlants,)),
           child: Padding(
             padding: const EdgeInsets.all(AppPadding.cardPadding),
             child: Row(
@@ -29,7 +31,7 @@ class BlogsItem extends StatelessWidget {
                     width: 146,
                     height: 133,
                     child: CustomNetworkImage(
-                      image: 'widget.model.image',
+                      image: blogsPlants.imageUrl ?? "",
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -40,7 +42,7 @@ class BlogsItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '2 Days ago',
+                        '${blogsPlants.waterCapacity} Days ago',
                         style: getMediumStyle(
                             fontSize: FontSize.f14,
                             color: ColorManager.primary),
@@ -50,14 +52,14 @@ class BlogsItem extends StatelessWidget {
 
                       Space(),
                       Text(
-                        '5 Tips to treat plants',
+                        '${blogsPlants.name}',
                         style: getMediumStyle(fontSize: FontSize.f18),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                       Space(),
                       Text(
-                        'leaf, in botany, any usually leaf, in botany, any usually ',
+                        '${blogsPlants.description}',
                         style: getMediumStyle(
                             fontSize: FontSize.f14,
                             color: ColorManager.grey),

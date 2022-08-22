@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:la_vie/view/resources/assets_manager.dart';
 import 'package:la_vie/view/resources/routes_manager.dart';
+import 'package:la_vie/view/resources/string_manager.dart';
 import 'package:la_vie/view/screens/profile/profile_edit_screen.dart';
 import 'package:la_vie/view/widgets/components.dart';
 import 'package:la_vie/view/widgets/custom_button.dart';
@@ -73,6 +74,7 @@ class ProfileScreen extends StatelessWidget {
                                   onSelected: (value) {
                                     if (value == 0) {
                                       CacheHelper.clearData();
+                                      StringManager.userToken = '';
                                       navigateAndFinish(
                                           context, const AuthorizeScreen());
                                     }
@@ -172,9 +174,12 @@ class ProfileScreen extends StatelessWidget {
                               onTap: () async {
                                 final result = await Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) =>  ProfileEditScreen(userData: cubit.currentUserModel!.data!)),
+                                  MaterialPageRoute(
+                                      builder: (context) => ProfileEditScreen(
+                                          userData:
+                                              cubit.currentUserModel!.data!)),
                                 );
-                                if (result == true){
+                                if (result == true) {
                                   cubit.getCurrentUser();
                                 }
                               },
@@ -210,8 +215,7 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           Space(),
-
-                                                  ],
+                        ],
                       ),
                     )
                   ],

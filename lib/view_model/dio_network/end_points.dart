@@ -20,8 +20,12 @@ class EndPoint {
   static const String getCurrentUser = '/api/v1/user/me';
   static const String updateCurrentUser = '/api/v1/user/me';
 
+  //Blogs
+  static const String getBlogs = '/api/v1/products/blogs';
+
   //Forums
   static const String createNewPost = '/api/v1/forums';
-  static const String getForums = '/api/v1/forums/me';
-  static const String getForumByTitle = '/api/v1/forums/me';
+  static const String getAllForums = '/api/v1/forums/me';
+  static const String getMyForums = '/api/v1/forums';
+  static const String getForumByTitle = '/api/v1/forums';
 }

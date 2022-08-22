@@ -16,12 +16,22 @@ class GetForumByTitleFailed extends ForumsState {
   }
 }
 
-class GetForumsLoading extends ForumsState {}
-class GetForumsSuccess extends ForumsState {}
-class GetForumsFailed extends ForumsState {
+class GetAllForumsLoading extends ForumsState {}
+class GetAllForumsSuccess extends ForumsState {}
+class GetAllForumsFailed extends ForumsState {
   var error;
 
-  GetForumsFailed(this.error){
+  GetAllForumsFailed(this.error){
+    Exceptions(error);
+  }
+}
+
+class GetMyForumsLoading extends ForumsState {}
+class GetMyForumsSuccess extends ForumsState {}
+class GetMyForumsFailed extends ForumsState {
+  var error;
+
+  GetMyForumsFailed(this.error){
     Exceptions(error);
   }
 }

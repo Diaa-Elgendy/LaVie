@@ -22,8 +22,7 @@ class UserData {
   String? address;
   String? role;
   int? userPoints;
-  //todo: Activate notifications
-  List<Null>? userNotification;
+  List<UserNotification>? userNotification;
 
   UserData(
       {this.userId,
@@ -45,12 +44,37 @@ class UserData {
     address = json['address'];
     role = json['role'];
     userPoints = json['UserPoints'];
-    // if (json['UserNotification'] != null) {
-    //   userNotification = <Null>[];
-    //   json['UserNotification'].forEach((v) {
-    //     userNotification!.add(Null.fromJson(v));
-    //   });
-    // }
+    if (json['UserNotification'] != null) {
+      userNotification = <UserNotification>[];
+      json['UserNotification'].forEach((v) {
+        userNotification!.add(UserNotification.fromJson(v));
+      });
+    }
   }
 
 }
+
+class UserNotification {
+  String? notificationId;
+  String? userId;
+  String? imageUrl;
+  String? message;
+  String? createdAt;
+
+  UserNotification(
+      {this.notificationId,
+        this.userId,
+        this.imageUrl,
+        this.message,
+        this.createdAt});
+
+  UserNotification.fromJson(Map<String, dynamic> json) {
+    notificationId = json['notificationId'];
+    userId = json['userId'];
+    imageUrl = json['imageUrl'];
+    message = json['message'];
+    createdAt = json['createdAt'];
+  }
+
+}
+

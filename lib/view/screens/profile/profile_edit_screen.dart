@@ -111,7 +111,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                 controller: lastNameCtrl, label: 'Last Name'),
                             Space(),
                             CustomTextField(
-                                controller: emailCtrl, label: 'Last Name'),
+                                controller: emailCtrl, label: 'Email'),
                             Space(),
                             CustomTextField(
                                 controller: addressCtrl, label: 'Address'),

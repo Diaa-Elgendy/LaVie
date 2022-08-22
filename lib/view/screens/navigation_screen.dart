@@ -1,12 +1,10 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:la_vie/view/resources/assets_manager.dart';
 import 'package:la_vie/view/screens/blogs/blogs_screen.dart';
-import 'package:la_vie/view/screens/blogs_forums/blogs_forums_screen.dart';
-import 'package:la_vie/view/screens/notification_screen.dart';
+import 'package:la_vie/view/screens/notifications/notification_screen.dart';
 import 'package:la_vie/view/screens/profile/profile_screen.dart';
 import 'package:la_vie/view/widgets/components.dart';
-import '../resources/assets_manager.dart';
-import '../resources/color_manager.dart';
+
 import 'home/home_screen.dart';
 
 class NavigationScreen extends StatefulWidget {
@@ -20,7 +18,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   int currentTab = 0;
 
   final List<Widget> screens = [
-    BlogsForumsScreen(),
+    const BlogsScreen(),
     const HomeScreen(),
     const NotificationScreen(),
     const ProfileScreen(),
@@ -31,13 +29,16 @@ class _NavigationScreenState extends State<NavigationScreen> {
   @override
   Widget build(BuildContext context)  {
     return Scaffold(
+
       body: PageStorage(
         bucket: bucket,
         child: screens[currentTab],
       ),
       floatingActionButton: FloatingActionButton(
         child: Image.asset(AssetsManager.scanIcon, width: 25, height: 25,),
-        onPressed: () {},
+        onPressed: () {
+          //navigateTo(context: context, widget: const QRViewExample());
+        },
       ),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -90,27 +91,3 @@ class _NavigationScreenState extends State<NavigationScreen> {
     );
   }
 }
-
-/*
-Scaffold(
-      body: screens[_page],
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: ColorManager.primary,
-        key: _bottomNavigationKey,
-        height: 55,
-        items: [
-          Tab(icon: Image.asset(AssetsManager.leafIcon),height: 30),
-          Tab(icon: Image.asset(AssetsManager.scanIcon),height: 25),
-          Tab(icon: Image.asset(AssetsManager.homeIcon),height: 28),
-          Tab(icon: Image.asset(AssetsManager.bellIcon),height: 28),
-          Tab(icon: Image.asset(AssetsManager.personIcon),height: 26),
-        ],
-        index: _page,
-        onTap: (index) {
-          setState(() {
-            _page = index;
-          });
-        },
-      ),
-    )
- */

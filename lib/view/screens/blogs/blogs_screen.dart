@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:la_vie/view/resources/style_manager.dart';
+import 'package:la_vie/view/resources/color_manager.dart';
 import 'package:la_vie/view/resources/values_manager.dart';
 import 'package:la_vie/view/screens/blogs/blogs_components.dart';
 import 'package:la_vie/view/widgets/components.dart';
-import 'package:la_vie/view_model/blogs_cubit/blogs_cubit.dart';
+import 'package:la_vie/view/widgets/empty_page.dart';
 import 'package:la_vie/view_model/blogs_cubit/blogs_cubit.dart';
 
 class BlogsScreen extends StatelessWidget {
@@ -12,23 +12,36 @@ class BlogsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //todo: Apply EmptyList in blogs
-    //todo: Apply ErrorCard in blogs
-    return
-      BlocConsumer<BlogsCubit, BlogsState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
+    return BlocConsumer<BlogsCubit, BlogsState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        BlogsCubit cubit = BlogsCubit.get(context);
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Blogs'),
+          ),
+          body: state is GetBlogsSuccess
+              ? cubit.blogsModel!.data!.plants!.isNotEmpty
+              ? ListView.separated(
             padding: const EdgeInsets.all(AppPadding.screenPadding),
             itemBuilder: (context, index) {
-              return const BlogsItem();
+              return BlogsItem(
+                blogsPlants: cubit.blogsModel!.data!.plants![index],
+              );
             },
             separatorBuilder: (context, index) => Space(),
-            itemCount: 4,
-          );
-        },
-      );
+            itemCount: cubit.blogsModel!.data!.plants!.length,
+          )
+              : EmptyPage(header: 'No Blogs Available Right Now')
+              : state is GetBlogsLoading
+              ? Loading(color: ColorManager.primary)
+              : ErrorCard(
+            function: () {
+              cubit.getBlogs();
+            },
+          ),
+        );
+      },
+    );
   }
 }

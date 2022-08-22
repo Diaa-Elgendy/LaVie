@@ -11,14 +11,14 @@ import 'package:la_vie/view/widgets/custom_button.dart';
 import 'package:la_vie/view/widgets/custom_textfield.dart';
 import 'package:la_vie/view_model/forums_cubit/forums_cubit.dart';
 
-class CreateNewPost extends StatefulWidget {
-  CreateNewPost({Key? key}) : super(key: key);
+class CreateNewPostScreen extends StatefulWidget {
+  CreateNewPostScreen({Key? key}) : super(key: key);
 
   @override
-  State<CreateNewPost> createState() => _CreateNewPostState();
+  State<CreateNewPostScreen> createState() => _CreateNewPostScreenState();
 }
 
-class _CreateNewPostState extends State<CreateNewPost> {
+class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
   final ImagePicker imagePicker = ImagePicker();
 
   XFile? image;

@@ -22,11 +22,11 @@ class SingleForumScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(),
             body: state is GetForumByTitleSuccess
-                ? cubit.forumByTitle != null ? Padding(
+                ? cubit.forumByTitle!.data!.isNotEmpty? Padding(
                   padding: const EdgeInsets.all(AppPadding.screenPadding),
                   child: Column(
                     children: [
-                      ForumItem(forumData: cubit.forumByTitle!),
+                      ForumItem(forumData: cubit.forumByTitle!.data![0]),
                     ],
                   ),
                 ) : EmptyPage(header: 'No Forum Found With This Name.')

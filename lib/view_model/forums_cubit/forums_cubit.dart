@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:la_vie/model/forums/forums_by_title.dart';
-import 'package:la_vie/model/forums/my_forums_model.dart';
+import 'package:la_vie/model/forums/all_forums_model.dart';
 import 'package:la_vie/view/resources/string_manager.dart';
 import 'package:la_vie/view_model/app/functions.dart';
 import 'package:la_vie/view_model/dio_network/dio_exceptions.dart';
@@ -20,35 +20,46 @@ class ForumsCubit extends Cubit<ForumsState> {
 
   static ForumsCubit get(context) => BlocProvider.of(context);
 
-  ForumsModel forumsModel = ForumsModel();
+  AllForumsModel forumsModel = AllForumsModel();
 
-  //For search
-  ForumData? forumByTitle;
+  AllForumsModel? forumByTitle;
 
   Future getForumByTitle(String title) async {
-    forumsModel = ForumsModel();
     emit(GetForumByTitleLoading());
     return await DioHelper.getData(
       endPoint: '${EndPoint.getForumByTitle}?search=$title',
       token: StringManager.userToken,
     ).then((value) {
-      forumByTitle = ForumData.fromJson(value.data);
+      forumByTitle = AllForumsModel.fromJson(value.data);
       emit(GetForumByTitleSuccess());
     }).catchError((error) {
       emit(GetForumByTitleFailed(error));
     });
   }
 
-  Future getMyForums() async {
-    emit(GetForumsLoading());
+  Future getAllForums() async {
+    emit(GetAllForumsLoading());
     return await DioHelper.getData(
-      endPoint: EndPoint.getForums,
+      endPoint: EndPoint.getAllForums,
       token: StringManager.userToken,
     ).then((value) {
-      forumsModel = ForumsModel.fromJson(value.data);
-      emit(GetForumsSuccess());
+      forumsModel = AllForumsModel.fromJson(value.data);
+      emit(GetAllForumsSuccess());
     }).catchError((error) {
-      emit(GetForumsFailed(error));
+      emit(GetAllForumsFailed(error));
+    });
+  }
+
+  Future getMyForums() async {
+    emit(GetMyForumsLoading());
+    return await DioHelper.getData(
+      endPoint: EndPoint.getMyForums,
+      token: StringManager.userToken,
+    ).then((value) {
+      forumsModel = AllForumsModel.fromJson(value.data);
+      emit(GetMyForumsSuccess());
+    }).catchError((error) {
+      emit(GetMyForumsFailed(error));
     });
   }
 

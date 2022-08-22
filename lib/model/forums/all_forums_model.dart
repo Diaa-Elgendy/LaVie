@@ -1,11 +1,11 @@
-class ForumsModel {
+class AllForumsModel {
   String? type;
   String? message;
   List<ForumData>? data;
 
-  ForumsModel({this.type, this.message, this.data});
+  AllForumsModel({this.type, this.message, this.data});
 
-  ForumsModel.fromJson(Map<String, dynamic> json) {
+  AllForumsModel.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     message = json['message'];
     if (json['data'] != null) {

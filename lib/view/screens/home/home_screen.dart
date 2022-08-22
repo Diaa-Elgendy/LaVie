@@ -1,13 +1,17 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:la_vie/model/home/product_model.dart';
 import 'package:la_vie/view/resources/assets_manager.dart';
 import 'package:la_vie/view/resources/style_manager.dart';
 import 'package:la_vie/view/resources/values_manager.dart';
+import 'package:la_vie/view/screens/buy_plant/buy_plant.dart';
 import 'package:la_vie/view/screens/cart/cart_screen.dart';
+import 'package:la_vie/view/screens/forums/forums_screen.dart';
 import 'package:la_vie/view/screens/home/home_components.dart';
 import 'package:la_vie/view/widgets/components.dart';
+import 'package:la_vie/view/widgets/custom_choice_chip.dart';
 import 'package:la_vie/view/widgets/empty_page.dart';
 import 'package:la_vie/view_model/app/functions.dart';
 import 'package:la_vie/view_model/cart_cubit/cart_cubit.dart';
@@ -47,6 +51,11 @@ class _HomeScreenState extends State<HomeScreen> {
   int filterLength = 0;
 
   @override
+  void dispose() {
+    searchCtrl.dispose();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     show('User Token:: ${StringManager.userToken}');
     return BlocProvider(
@@ -78,17 +87,55 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Positioned(
                                   right: 0,
+                                  child: Row(
+                                    children: [
+                                      Card(
+                                        shape: const CircleBorder(),
+                                        elevation: AppSize.elevation,
+                                        color: ColorManager.greyLight,
+                                        child: IconButton(
+                                          padding: const EdgeInsets.all(5),
+                                          onPressed: () {
+                                            navigateTo(
+                                                context: context,
+                                                widget: BuyPlant());
+                                          },
+                                          icon: const Icon(Icons.location_on_outlined, size: 18),
+                                          constraints: const BoxConstraints(),
+                                        ),
+                                      ),
+                                      Card(
+                                        shape: const CircleBorder(),
+                                        elevation: AppSize.elevation,
+                                        color: ColorManager.greyLight,
+                                        child: IconButton(
+                                          padding: const EdgeInsets.all(5),
+                                          onPressed: () {
+                                            navigateTo(
+                                                context: context,
+                                                widget: const ExamScreen());
+                                          },
+                                          icon: const Icon(Icons.question_mark_outlined, size: 18),
+                                          constraints: const BoxConstraints(),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Positioned(
+                                  left: 0,
                                   child: Card(
                                     shape: const CircleBorder(),
                                     elevation: AppSize.elevation,
-                                    color: ColorManager.greyLight,
+                                    color: ColorManager.primary,
                                     child: IconButton(
+                                      padding: const EdgeInsets.all(5),
                                       onPressed: () {
                                         navigateTo(
                                             context: context,
-                                            widget: const ExamScreen());
+                                            widget: const ForumsScreen());
                                       },
-                                      icon: const Icon(Icons.question_mark),
+                                      icon: const Icon(Icons.chrome_reader_mode_outlined, size: 18, color: ColorManager.white,),
                                       constraints: const BoxConstraints(),
                                     ),
                                   ),
@@ -140,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       padding: const EdgeInsets.all(7),
                                       badgeColor: ColorManager.primaryLight,
-                                      showBadge: cartCubit.cartList.length > 0
+                                      showBadge: cartCubit.cartList.isNotEmpty
                                           ? true
                                           : false,
                                       position: const BadgePosition(
@@ -176,39 +223,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 physics: const BouncingScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
-                                  return ChoiceChip(
-                                    label: Text(
-                                      chipsTitle[index],
-                                      style: getMediumStyle(
-                                          color: chipsSelected[index]
-                                              ? ColorManager.primary
-                                              : ColorManager.grey),
-                                    ),
-                                    labelPadding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    padding: const EdgeInsets.all(8),
-                                    selected: chipsSelected[index],
-                                    selectedColor: ColorManager.white,
-                                    backgroundColor: ColorManager.greyLight,
-                                    shape: chipsSelected[index]
-                                        ? RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                AppSize.borderRadius),
-                                            side: const BorderSide(
-                                                width: 1.5,
-                                                color: ColorManager.primary),
-                                          )
-                                        : RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                AppSize.borderRadius),
-                                            side: const BorderSide(
-                                                width: 1.5,
-                                                color: ColorManager.greyLight),
-                                          ),
-                                    onSelected: (value) {
+                                  return CustomChoiceChip(
+                                    text: chipsTitle[index],
+                                    isSelected: chipsSelected[index],
+                                    onSelected: () {
                                       setState(() {
                                         filteredList.clear();
-                                        if (index == 0 && value == true) {
+                                        if (index == 0) {
                                           chipsSelected = [
                                             true,
                                             false,
@@ -233,10 +254,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                           filterLength = 0;
                                           filter = 'PLANT';
                                           for (int i = 0;
-                                              i <
-                                                  cubit.productsModel!.products!
-                                                      .length;
-                                              i++) {
+                                          i <
+                                              cubit.productsModel!.products!
+                                                  .length;
+                                          i++) {
                                             if (filter ==
                                                 cubit.productsModel!
                                                     .products![i].type) {
@@ -256,10 +277,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                           filter = 'SEED';
                                           for (int i = 0;
-                                              i <
-                                                  cubit.productsModel!.products!
-                                                      .length;
-                                              i++) {
+                                          i <
+                                              cubit.productsModel!.products!
+                                                  .length;
+                                          i++) {
                                             if (filter ==
                                                 cubit.productsModel!
                                                     .products![i].type) {
@@ -280,10 +301,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                           filter = 'TOOL';
                                           for (int i = 0;
-                                              i <
-                                                  cubit.productsModel!.products!
-                                                      .length;
-                                              i++) {
+                                          i <
+                                              cubit.productsModel!.products!
+                                                  .length;
+                                          i++) {
                                             if (filter ==
                                                 cubit.productsModel!
                                                     .products![i].type) {
@@ -324,50 +345,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           data: filteredList[index]);
                                     })
                                 : Space(height: 0, width: 0),
-
-                            // //Seeds Gridview
-                            // cubit.seedModel!.data!.isNotEmpty &&
-                            //         (chipsSelected[0] || chipsSelected[2])
-                            //     ? GridView.builder(
-                            //         shrinkWrap: true,
-                            //         physics: const NeverScrollableScrollPhysics(),
-                            //         gridDelegate:
-                            //             const SliverGridDelegateWithMaxCrossAxisExtent(
-                            //           maxCrossAxisExtent: 300,
-                            //           childAspectRatio: 3 / 6,
-                            //           crossAxisSpacing: 10,
-                            //           mainAxisSpacing: 10,
-                            //         ),
-                            //         itemCount: cubit.seedModel!.data!.length,
-                            //         itemBuilder: (BuildContext ctx, index) {
-                            //           return SeedCard(
-                            //             seed: cubit.seedModel!.data![index],
-                            //           );
-                            //         },
-                            //       )
-                            //     : Space(height: 0, width: 0),
-                            //
-                            // //Tools Gridview
-                            // cubit.toolModel!.data!.isNotEmpty &&
-                            //         (chipsSelected[0] || chipsSelected[3])
-                            //     ? GridView.builder(
-                            //         shrinkWrap: true,
-                            //         physics: const NeverScrollableScrollPhysics(),
-                            //         gridDelegate:
-                            //             const SliverGridDelegateWithMaxCrossAxisExtent(
-                            //           maxCrossAxisExtent: 300,
-                            //           childAspectRatio: 3 / 6,
-                            //           crossAxisSpacing: 10,
-                            //           mainAxisSpacing: 10,
-                            //         ),
-                            //         itemCount: cubit.toolModel!.data!.length,
-                            //         itemBuilder: (BuildContext ctx, index) {
-                            //           return ToolCard(
-                            //             tool: cubit.toolModel!.data![index],
-                            //           );
-                            //         },
-                            //       )
-                            //     : Space(height: 0, width: 0),
                           ],
                         ),
                       )

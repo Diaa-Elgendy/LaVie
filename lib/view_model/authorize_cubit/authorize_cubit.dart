@@ -53,6 +53,7 @@ class AuthorizeCubit extends Cubit<AuthorizeState> {
       },
     ).then((value) {
       UserModel userModel = UserModel.fromJson(value.data);
+      print(value.data);
       emit(LoginSuccess(userModel));
     }).catchError((error) {
       emit(LoginFailed(error));
