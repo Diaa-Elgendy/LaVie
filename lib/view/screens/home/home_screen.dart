@@ -9,7 +9,7 @@ import 'package:la_vie/view/resources/values_manager.dart';
 import 'package:la_vie/view/screens/buy_plant/buy_plant.dart';
 import 'package:la_vie/view/screens/cart/cart_screen.dart';
 import 'package:la_vie/view/screens/forums/forums_screen.dart';
-import 'package:la_vie/view/screens/home/home_components.dart';
+import 'package:la_vie/view/widgets/home_card_item.dart';
 import 'package:la_vie/view/widgets/components.dart';
 import 'package:la_vie/view/widgets/custom_choice_chip.dart';
 import 'package:la_vie/view/widgets/empty_page.dart';
@@ -55,8 +55,10 @@ class _HomeScreenState extends State<HomeScreen> {
     searchCtrl.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
+    //var cubit = BlocProvider.of<HomeCubit>(context,listen: true);
     show('User Token:: ${StringManager.userToken}');
     return BlocProvider(
       create: (context) => HomeCubit()..getProducts(),
@@ -100,7 +102,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 context: context,
                                                 widget: BuyPlant());
                                           },
-                                          icon: const Icon(Icons.location_on_outlined, size: 18),
+                                          icon: const Icon(
+                                              Icons.location_on_outlined,
+                                              size: 18),
                                           constraints: const BoxConstraints(),
                                         ),
                                       ),
@@ -115,7 +119,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 context: context,
                                                 widget: const ExamScreen());
                                           },
-                                          icon: const Icon(Icons.question_mark_outlined, size: 18),
+                                          icon: const Icon(
+                                              Icons.question_mark_outlined,
+                                              size: 18),
                                           constraints: const BoxConstraints(),
                                         ),
                                       ),
@@ -135,7 +141,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                             context: context,
                                             widget: const ForumsScreen());
                                       },
-                                      icon: const Icon(Icons.chrome_reader_mode_outlined, size: 18, color: ColorManager.white,),
+                                      icon: const Icon(
+                                        Icons.chrome_reader_mode_outlined,
+                                        size: 18,
+                                        color: ColorManager.white,
+                                      ),
                                       constraints: const BoxConstraints(),
                                     ),
                                   ),
@@ -162,7 +172,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         isDense: true,
                                         hintText: 'Search...',
                                         hintStyle: getRegularStyle(
-                                            color: ColorManager.grey),
+                                          color: ColorManager.grey,
+                                        ),
                                         contentPadding: const EdgeInsets.all(8),
                                         fillColor: Colors.red,
                                       ),
@@ -181,13 +192,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                         BlocProvider.of(context);
                                     return Badge(
                                       badgeContent: Text(
-                                        '${cartCubit.cartList.length}',
+                                        '${cartCubit.cart.length}',
                                         style: getRegularStyle(
                                             color: ColorManager.white),
                                       ),
                                       padding: const EdgeInsets.all(7),
                                       badgeColor: ColorManager.primaryLight,
-                                      showBadge: cartCubit.cartList.isNotEmpty
+                                      showBadge: cartCubit.cart.isNotEmpty
                                           ? true
                                           : false,
                                       position: const BadgePosition(
@@ -254,10 +265,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                           filterLength = 0;
                                           filter = 'PLANT';
                                           for (int i = 0;
-                                          i <
-                                              cubit.productsModel!.products!
-                                                  .length;
-                                          i++) {
+                                              i <
+                                                  cubit.productsModel!.products!
+                                                      .length;
+                                              i++) {
                                             if (filter ==
                                                 cubit.productsModel!
                                                     .products![i].type) {
@@ -277,10 +288,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                           filter = 'SEED';
                                           for (int i = 0;
-                                          i <
-                                              cubit.productsModel!.products!
-                                                  .length;
-                                          i++) {
+                                              i <
+                                                  cubit.productsModel!.products!
+                                                      .length;
+                                              i++) {
                                             if (filter ==
                                                 cubit.productsModel!
                                                     .products![i].type) {
@@ -301,10 +312,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                           filter = 'TOOL';
                                           for (int i = 0;
-                                          i <
-                                              cubit.productsModel!.products!
-                                                  .length;
-                                          i++) {
+                                              i <
+                                                  cubit.productsModel!.products!
+                                                      .length;
+                                              i++) {
                                             if (filter ==
                                                 cubit.productsModel!
                                                     .products![i].type) {
@@ -336,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     gridDelegate:
                                         const SliverGridDelegateWithMaxCrossAxisExtent(
                                             maxCrossAxisExtent: 300,
-                                            childAspectRatio: 3 / 6,
+                                            childAspectRatio: 3 / 4.2,
                                             crossAxisSpacing: 10,
                                             mainAxisSpacing: 10),
                                     itemCount: filteredList.length,
