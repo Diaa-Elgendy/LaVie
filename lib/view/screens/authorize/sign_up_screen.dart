@@ -4,10 +4,10 @@ import 'package:la_vie/view/resources/assets_manager.dart';
 import 'package:la_vie/view/resources/style_manager.dart';
 import 'package:la_vie/view/widgets/components.dart';
 import 'package:la_vie/view_model/authorize_cubit/authorize_cubit.dart';
+import 'package:la_vie/view_model/local_data/shared_pref/cache_manager.dart';
 
 import '../../../view_model/app/functions.dart';
-import '../../../view_model/shared_pref/cache_helper.dart';
-import '../../../view_model/shared_pref/cache_manager.dart';
+import '../../../view_model/local_data/shared_pref/cache_helper.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/routes_manager.dart';

@@ -47,7 +47,7 @@ class _CustomChoiceChipState extends State<CustomChoiceChip> {
       ),
       onSelected: (value) {
         widget.onSelected();
-        widget.onChange?.call(value!);
+        widget.onChange?.call(value);
       },
     );
   }

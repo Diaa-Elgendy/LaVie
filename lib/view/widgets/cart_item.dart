@@ -5,11 +5,11 @@ import 'package:la_vie/view/resources/font_manager.dart';
 import 'package:la_vie/view_model/cart_cubit/cart_cubit.dart';
 import 'package:la_vie/view_model/cart_cubit/cart_cubit.dart';
 
-import '../../../model/cart/cart_Model.dart';
-import '../../resources/assets_manager.dart';
-import '../../resources/style_manager.dart';
-import '../../resources/values_manager.dart';
-import '../../widgets/components.dart';
+import '../../model/cart/cart_model.dart';
+import '../resources/assets_manager.dart';
+import '../resources/style_manager.dart';
+import '../resources/values_manager.dart';
+import 'components.dart';
 
 class CartItem extends StatefulWidget {
   CartModel model;
@@ -83,7 +83,7 @@ class _CartItemState extends State<CartItem> {
                                         if (widget.model.count > 1) {
                                           widget.model.count--;
                                         }
-                                        cubit.changeCount(widget.model.id, widget.model.count);
+                                        cubit.changeCount(widget.model.productId, widget.model.count);
                                     },
                                     icon: const Icon(
                                       Icons.remove,
@@ -100,7 +100,7 @@ class _CartItemState extends State<CartItem> {
                                   IconButton(
                                     onPressed: () {
                                         widget.model.count++;
-                                        cubit.changeCount(widget.model.id, widget.model.count);
+                                        cubit.changeCount(widget.model.productId, widget.model.count);
                                     },
                                     icon: const Icon(
                                       Icons.add,

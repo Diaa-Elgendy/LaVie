@@ -7,7 +7,7 @@ import 'package:la_vie/view/resources/style_manager.dart';
 import 'package:la_vie/view/resources/values_manager.dart';
 import 'package:la_vie/view/screens/cart/cart_screen.dart';
 import 'package:la_vie/view/screens/forums/create_new_post_screen.dart';
-import 'package:la_vie/view/screens/forums/forums_components.dart';
+import 'package:la_vie/view/widgets/forums_items.dart';
 import 'package:la_vie/view/screens/forums/single_forum.dart';
 import 'package:la_vie/view/widgets/components.dart';
 import 'package:la_vie/view/widgets/custom_choice_chip.dart';

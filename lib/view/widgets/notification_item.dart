@@ -8,7 +8,8 @@ import 'package:la_vie/view/widgets/components.dart';
 
 class NotificationItem extends StatelessWidget {
   UserNotification notification;
-  NotificationItem({required this.notification ,Key? key}) : super(key: key);
+
+  NotificationItem({required this.notification, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +23,11 @@ class NotificationItem extends StatelessWidget {
         children: [
           ClipOval(
             child: SizedBox(
-          width: 32,
-          height: 32,
+              width: 50,
+              height: 50,
               child: CustomNetworkImage(
                 image: '${notification.imageUrl}',
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -36,14 +38,13 @@ class NotificationItem extends StatelessWidget {
               children: [
                 Text(
                   '${notification.message}',
-                  style: getMediumStyle(
-                      fontSize: FontSize.f14),
+                  style: getMediumStyle(fontSize: FontSize.f14),
                 ),
                 Space(height: 5),
-                Text('${notification.createdAt!.substring(0,9)} at ${notification.createdAt!.substring(11,16)}',
+                Text(
+                    '${notification.createdAt!.substring(0, 9)} at ${notification.createdAt!.substring(11, 16)}',
                     style: getRegularStyle(
-                        fontSize: FontSize.f14,
-                        color: Colors.grey)),
+                        fontSize: FontSize.f14, color: Colors.grey)),
               ],
             ),
           ),

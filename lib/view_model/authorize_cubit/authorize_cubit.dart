@@ -13,6 +13,7 @@ import '../app/functions.dart';
 import '../dio_network/dio_exceptions.dart';
 import '../dio_network/dio_helper.dart';
 import '../dio_network/end_points.dart';
+
 part 'authorize_state.dart';
 
 class AuthorizeCubit extends Cubit<AuthorizeState> {
@@ -41,9 +42,7 @@ class AuthorizeCubit extends Cubit<AuthorizeState> {
     });
   }
 
-  Future postLogin(
-      {required String email,
-        required String password}) async {
+  Future postLogin({required String email, required String password}) async {
     emit(LoginLoading());
     return await DioHelper.postData(
       endPoint: EndPoint.login,
@@ -53,15 +52,14 @@ class AuthorizeCubit extends Cubit<AuthorizeState> {
       },
     ).then((value) {
       UserModel userModel = UserModel.fromJson(value.data);
-      print(value.data);
+      show(value.data);
       emit(LoginSuccess(userModel));
     }).catchError((error) {
       emit(LoginFailed(error));
     });
   }
 
-  Future postForgetPassword(
-      {required String email}) async {
+  Future postForgetPassword({required String email}) async {
     emit(ForgetPasswordLoading());
     return await DioHelper.postData(
       endPoint: EndPoint.forgetPassword,
@@ -75,8 +73,7 @@ class AuthorizeCubit extends Cubit<AuthorizeState> {
     });
   }
 
-  Future postVerifyOTP(
-      {required String email,required String otp}) async {
+  Future postVerifyOTP({required String email, required String otp}) async {
     emit(VerifyOtpLoading());
     return await DioHelper.postData(
       endPoint: EndPoint.verifyOTP,
@@ -92,7 +89,9 @@ class AuthorizeCubit extends Cubit<AuthorizeState> {
   }
 
   Future postResetPassword(
-      {required String email,required String otp, required String password}) async {
+      {required String email,
+      required String otp,
+      required String password}) async {
     emit(ResetPasswordLoading());
     return await DioHelper.postData(
       endPoint: EndPoint.verifyOTP,

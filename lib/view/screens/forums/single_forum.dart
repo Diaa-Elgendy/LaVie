@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:la_vie/view/resources/color_manager.dart';
 import 'package:la_vie/view/resources/values_manager.dart';
-import 'package:la_vie/view/screens/forums/forums_components.dart';
+import 'package:la_vie/view/widgets/forums_items.dart';
 import 'package:la_vie/view/widgets/components.dart';
 import 'package:la_vie/view/widgets/empty_page.dart';
 import 'package:la_vie/view_model/forums_cubit/forums_cubit.dart';

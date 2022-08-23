@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:la_vie/view/resources/values_manager.dart';
 import 'package:la_vie/view/widgets/components.dart';
 
-import '../../resources/assets_manager.dart';
-import '../../resources/color_manager.dart';
-import '../../resources/font_manager.dart';
-import '../../resources/style_manager.dart';
+import '../resources/assets_manager.dart';
+import '../resources/color_manager.dart';
+import '../resources/font_manager.dart';
+import '../resources/style_manager.dart';
 
 class ValuesCardForPlant extends StatelessWidget {
   String label, superScript, image;

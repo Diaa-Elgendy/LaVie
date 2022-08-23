@@ -5,11 +5,8 @@ import 'package:la_vie/view/resources/routes_manager.dart';
 import 'package:la_vie/view/resources/string_manager.dart';
 import 'package:la_vie/view/screens/profile/profile_edit_screen.dart';
 import 'package:la_vie/view/widgets/components.dart';
-import 'package:la_vie/view/widgets/custom_button.dart';
+import 'package:la_vie/view_model/local_data/shared_pref/cache_helper.dart';
 import 'package:la_vie/view_model/proile_cubit/profile_cubit.dart';
-import 'package:la_vie/view_model/proile_cubit/profile_cubit.dart';
-import 'package:la_vie/view_model/shared_pref/cache_helper.dart';
-
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/style_manager.dart';

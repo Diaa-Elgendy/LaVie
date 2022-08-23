@@ -4,11 +4,11 @@ import 'package:la_vie/view/resources/assets_manager.dart';
 import 'package:la_vie/view/resources/color_manager.dart';
 import 'package:la_vie/view/resources/font_manager.dart';
 import 'package:la_vie/view/resources/style_manager.dart';
-import 'package:la_vie/view/screens/view_product/view_product_component.dart';
+import 'package:la_vie/view/widgets/view_product_item.dart';
 import 'package:la_vie/view/widgets/components.dart';
 import 'package:la_vie/view/widgets/custom_button.dart';
 import 'package:la_vie/view_model/cart_cubit/cart_cubit.dart';
-import '../../../model/cart/cart_Model.dart';
+import '../../../model/cart/cart_model.dart';
 import '../../resources/values_manager.dart';
 
 class ViewProductScreen extends StatefulWidget {
@@ -201,7 +201,7 @@ class _ViewProductScreenState extends State<ViewProductScreen> {
                               function: () {
                                 cartCubit.addToCart(
                                   CartModel(
-                                    id: widget.data.productId,
+                                    productId: widget.data.productId,
                                     name: type.name,
                                     image: type.imageUrl,
                                     price: widget.data.price,

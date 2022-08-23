@@ -2,10 +2,9 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:la_vie/view/resources/assets_manager.dart';
 import 'package:la_vie/view/resources/string_manager.dart';
-import 'package:la_vie/view_model/shared_pref/cache_manager.dart';
-
+import 'package:la_vie/view_model/local_data/shared_pref/cache_helper.dart';
+import 'package:la_vie/view_model/local_data/shared_pref/cache_manager.dart';
 import '../../view_model/app/functions.dart';
-import '../../view_model/shared_pref/cache_helper.dart';
 import '../resources/color_manager.dart';
 import 'authorize/authorize_screen.dart';
 import 'navigation_screen.dart';

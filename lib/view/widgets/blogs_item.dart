@@ -5,9 +5,9 @@ import 'package:la_vie/view/resources/routes_manager.dart';
 import 'package:la_vie/view/screens/blogs/single_blog_screen.dart';
 import 'package:la_vie/view/widgets/components.dart';
 
-import '../../resources/font_manager.dart';
-import '../../resources/style_manager.dart';
-import '../../resources/values_manager.dart';
+import '../resources/font_manager.dart';
+import '../resources/style_manager.dart';
+import '../resources/values_manager.dart';
 
 class BlogsItem extends StatelessWidget {
   BlogsPlants blogsPlants;

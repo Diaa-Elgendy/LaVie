@@ -5,13 +5,13 @@ import 'package:la_vie/view/resources/color_manager.dart';
 import 'package:la_vie/view/resources/font_manager.dart';
 import 'package:la_vie/view/resources/style_manager.dart';
 import 'package:la_vie/view/resources/values_manager.dart';
-import 'package:la_vie/view/screens/cart/cart_components.dart';
+import 'package:la_vie/view/widgets/cart_item.dart';
 import 'package:la_vie/view/widgets/custom_button.dart';
 import 'package:la_vie/view/widgets/empty_page.dart';
 import 'package:la_vie/view_model/cart_cubit/cart_cubit.dart';
 import 'package:la_vie/view_model/cart_cubit/cart_cubit.dart';
 
-import '../../../model/cart/cart_Model.dart';
+import '../../../model/cart/cart_model.dart';
 import '../../widgets/components.dart';
 
 class CartScreen extends StatefulWidget {
@@ -30,8 +30,19 @@ class _CartScreenState extends State<CartScreen> {
         return Scaffold(
             appBar: AppBar(
               title: const Text('My Cart'),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    //cubit.clearDatabase();
+                  },
+                  icon: const Icon(
+                    Icons.delete_forever,
+                    color: ColorManager.primary,
+                  ),
+                ),
+              ],
             ),
-            body: cubit.cartList.isNotEmpty
+            body: cubit.cart.isNotEmpty
                 ? ListView(
                     padding: const EdgeInsets.all(AppPadding.screenPadding),
                     children: [
@@ -40,20 +51,19 @@ class _CartScreenState extends State<CartScreen> {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           return CartItem(
-                            model: cubit.cartList[index],
+                            model: cubit.cart[index],
                           );
                         },
                         separatorBuilder: (context, index) => Space(),
-                        itemCount: cubit.cartList.length,
+                        itemCount: cubit.cart.length,
                       ),
                     ],
                   )
-                :  EmptyPage(
-                  header: 'Your Cart Is Empty',
-                  body:           'Bring some plants and product here.',
-
-                ),
-            bottomNavigationBar: cubit.cartList.isNotEmpty
+                : EmptyPage(
+                    header: 'Your Cart Is Empty',
+                    body: 'Bring some plants and product here.',
+                  ),
+            bottomNavigationBar: cubit.cart.isNotEmpty
                 ? Padding(
                     padding: const EdgeInsets.all(AppPadding.screenPadding),
                     child: Column(

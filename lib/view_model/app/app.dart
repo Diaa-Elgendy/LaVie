@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (BuildContext context) => AuthorizeCubit()),
         BlocProvider(create: (BuildContext context) => HomeCubit()..getProducts()),
         BlocProvider(create: (BuildContext context) => ProfileCubit()..getCurrentUser()),
-        BlocProvider(create: (BuildContext context) => CartCubit()..getTotalPrice()),
+        BlocProvider(create: (BuildContext context) => CartCubit()..getTotalPrice()..createDatabase()),
         BlocProvider(create: (BuildContext context) => ForumsCubit()..getMyForums()),
         BlocProvider(create: (BuildContext context) => BlogsCubit()..getBlogs()),
       ],
