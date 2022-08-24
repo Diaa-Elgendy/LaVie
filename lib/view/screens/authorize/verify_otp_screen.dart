@@ -145,30 +145,17 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
                               blurRadius: 10,
                             )
                           ],
-                          onCompleted: (v) {
-                            debugPrint("Completed");
-                          },
-                          // onTap: () {
-                          //   print("Pressed");
-                          // },
                           onChanged: (value) {
-                            debugPrint(value);
                             setState(() {
                               currentText = value;
                             });
-                          },
-                          beforeTextPaste: (text) {
-                            debugPrint("Allowing to paste $text");
-                            //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                            //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                            return true;
                           },
                         )),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
                     child: Text(
-                      hasError ? "*Please fill up all the cells properly" : "",
+                      hasError ? "Please Apply The OTP Code." : "",
                       style: getRegularStyle(color: ColorManager.toastError),
                     ),
                   ),
@@ -223,7 +210,6 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
                               () {
                                 hasError = false;
                                 navigateTo(context: context, widget: ResetPasswordScreen(email: widget.email,otp: otpCtrl.text,));
-                                //todo: activate postVerifyOTP
                                 // cubit.postVerifyOTP(
                                 //     email: widget.email, otp: otpCtrl.text);
                               },

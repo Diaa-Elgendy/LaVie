@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:la_vie/view/resources/assets_manager.dart';
+import 'package:la_vie/view/resources/color_manager.dart';
 import 'package:la_vie/view/screens/blogs/blogs_screen.dart';
 import 'package:la_vie/view/screens/notifications/notification_screen.dart';
 import 'package:la_vie/view/screens/profile/profile_screen.dart';
@@ -36,8 +38,12 @@ class _NavigationScreenState extends State<NavigationScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Image.asset(AssetsManager.scanIcon, width: 25, height: 25,),
-        onPressed: () {
-          //navigateTo(context: context, widget: const QRViewExample());
+        onPressed: () async {
+          String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+              '#1ABC00',
+              'Cancel',
+              true,
+              ScanMode.QR);
         },
       ),
 

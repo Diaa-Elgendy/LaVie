@@ -6,6 +6,7 @@ import 'package:la_vie/view/resources/font_manager.dart';
 import 'package:la_vie/view/resources/style_manager.dart';
 import 'package:la_vie/view/resources/values_manager.dart';
 import 'package:la_vie/view/widgets/components.dart';
+import 'package:la_vie/view/widgets/custom_scaffold.dart';
 import 'package:la_vie/view_model/dio_network/end_points.dart';
 
 class SingleBlogScreen extends StatelessWidget {
@@ -17,35 +18,37 @@ class SingleBlogScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: ListView(
-        children: [
-          SizedBox(
-            height: 300,
-            child: CustomNetworkImage(
-              image: blogsPlants.imageUrl!,
-              radius: 0,
+      body: CustomNetworkChecker(
+        child: ListView(
+          children: [
+            SizedBox(
+              height: 300,
+              child: CustomNetworkImage(
+                image: blogsPlants.imageUrl!,
+                radius: 0,
+              ),
             ),
-          ),
-          Space(),
-          Padding(
-            padding: const EdgeInsets.all(AppPadding.screenPadding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${blogsPlants.name}',
-                  style: getMediumStyle(fontSize: FontSize.f24),
-                ),
-                Space(),
-                Text(
-                  '${blogsPlants.description}',
-                  style: getRegularStyle(
-                      fontSize: FontSize.f20, color: ColorManager.grey),
-                )
-              ],
+            Space(),
+            Padding(
+              padding: const EdgeInsets.all(AppPadding.screenPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${blogsPlants.name}',
+                    style: getMediumStyle(fontSize: FontSize.f24),
+                  ),
+                  Space(),
+                  Text(
+                    '${blogsPlants.description}',
+                    style: getRegularStyle(
+                        fontSize: FontSize.f20, color: ColorManager.grey),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

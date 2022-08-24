@@ -6,6 +6,8 @@ import 'package:la_vie/view/widgets/empty_page.dart';
 import 'package:la_vie/view/widgets/notification_item.dart';
 import 'package:la_vie/view_model/proile_cubit/profile_cubit.dart';
 
+import '../../widgets/custom_scaffold.dart';
+
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({Key? key}) : super(key: key);
 
@@ -18,27 +20,27 @@ class NotificationScreen extends StatelessWidget {
           appBar: AppBar(
             title: const Text('Notification'),
           ),
-          body: state is GetCurrentUserSuccess
-              ? cubit.currentUserModel!.data!.userNotification!.isNotEmpty
-              ? ListView.separated(
-              itemBuilder: (context, index) =>
-                  NotificationItem(
-                      notification: cubit.currentUserModel!.data!
-                          .userNotification![index]),
-              separatorBuilder: (context, index) =>
-              const Divider(
-                  height: 0.5,
-                  color: Colors.grey
-              ),
-              itemCount: cubit.currentUserModel!.data!
-                  .userNotification!.length)
-              : EmptyPage(header: 'No Available Notifications Right Now.')
-              : state is GetCurrentUserLoading
-              ? Loading(color: ColorManager.primary,)
-              : ErrorCard(
-            function: () {
-              cubit.getCurrentUser();
-            },
+          body: CustomNetworkChecker(
+            child: state is GetCurrentUserSuccess
+                ? cubit.currentUserModel!.data!.userNotification!.isNotEmpty
+                    ? ListView.separated(
+                        itemBuilder: (context, index) => NotificationItem(
+                            notification: cubit.currentUserModel!.data!
+                                .userNotification![index]),
+                        separatorBuilder: (context, index) =>
+                            const Divider(height: 0.5, color: Colors.grey),
+                        itemCount: cubit
+                            .currentUserModel!.data!.userNotification!.length)
+                    : EmptyPage(header: 'No Available Notifications Right Now.')
+                : state is GetCurrentUserLoading
+                    ? Loading(
+                        color: ColorManager.primary,
+                      )
+                    : ErrorCard(
+                        function: () {
+                          cubit.getCurrentUser();
+                        },
+                      ),
           ),
         );
       },

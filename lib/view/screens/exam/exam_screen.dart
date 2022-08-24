@@ -250,11 +250,11 @@ class _ExamScreenState extends State<ExamScreen> {
                                 currentIndex--;
                                 showSnackBar('Exam Complete, You hit $totalScore correct answers out of ${exam.length}', context);
                                 DateTime lastExamDate = DateTime.now();
-                                CacheHelper.putData(CacheManager.lastDateExam, lastExamDate.toString());
+                                CacheHelper.putData(CacheManager.lastDateExam, lastExamDate);
                                 print(CacheHelper.getData(CacheManager.lastDateExam));
                                 //DateTime currentDate = DateTime.now().add(const Duration(days: 6));
                                 //print(currentDate.difference(lastExamDate).inDays);
-                                Navigator.pop(context);
+                                Navigator.pop(context, true);
                               }
                               setState(() {
 

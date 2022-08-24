@@ -1,5 +1,3 @@
-import 'dart:developer';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +10,8 @@ import 'package:la_vie/view/widgets/components.dart';
 import 'package:la_vie/view/widgets/custom_button.dart';
 import 'package:la_vie/view/widgets/custom_textfield.dart';
 import 'package:la_vie/view_model/proile_cubit/profile_cubit.dart';
-import 'package:path/path.dart';
+
+import '../../widgets/custom_scaffold.dart';
 
 class ProfileEditScreen extends StatefulWidget {
   UserData userData;
@@ -66,81 +65,83 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
               'Edit Profile',
             ),
           ),
-          body: ListView(
-            padding: const EdgeInsets.all(AppPadding.screenPadding),
-            children: [
-              //Form
-              Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    //General information
-                    Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(AppPadding.cardPadding),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Center(
-                              child: Text(
-                                'General Information',
-                                style: getSemiBoldStyle(
-                                    color: ColorManager.primary,
-                                    fontSize: FontSize.f20),
-                              ),
-                            ),
-                            Space(height: 20),
-                            CircleAvatar(
-                              backgroundColor: ColorManager.primary,
-                              radius: 78,
-                              child: SizedBox(
-                                width: 150,
-                                height: 150,
-                                child: ClipOval(
-                                  child: CustomNetworkImage(
-                                      image: widget.userData.imageUrl!,
-                                      withBaseUrl: false),
+          body: CustomNetworkChecker(
+            child: ListView(
+              padding: const EdgeInsets.all(AppPadding.screenPadding),
+              children: [
+                //Form
+                Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      //General information
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(AppPadding.cardPadding),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: Text(
+                                  'General Information',
+                                  style: getSemiBoldStyle(
+                                      color: ColorManager.primary,
+                                      fontSize: FontSize.f20),
                                 ),
                               ),
-                            ),
-                            Space(height: 30),
-                            CustomTextField(
-                                controller: firstNameCtrl, label: 'First Name'),
-                            Space(),
-                            CustomTextField(
-                                controller: lastNameCtrl, label: 'Last Name'),
-                            Space(),
-                            CustomTextField(
-                                controller: emailCtrl, label: 'Email'),
-                            Space(),
-                            CustomTextField(
-                                controller: addressCtrl, label: 'Address'),
-                            Space(),
-                          ],
+                              Space(height: 20),
+                              CircleAvatar(
+                                backgroundColor: ColorManager.primary,
+                                radius: 78,
+                                child: SizedBox(
+                                  width: 150,
+                                  height: 150,
+                                  child: ClipOval(
+                                    child: CustomNetworkImage(
+                                        image: widget.userData.imageUrl!,
+                                        withBaseUrl: false),
+                                  ),
+                                ),
+                              ),
+                              Space(height: 30),
+                              CustomTextField(
+                                  controller: firstNameCtrl, label: 'First Name'),
+                              Space(),
+                              CustomTextField(
+                                  controller: lastNameCtrl, label: 'Last Name'),
+                              Space(),
+                              CustomTextField(
+                                  controller: emailCtrl, label: 'Email'),
+                              Space(),
+                              CustomTextField(
+                                  controller: addressCtrl, label: 'Address'),
+                              Space(),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Space(),
+                      Space(),
 
-                    FractionallySizedBox(
-                      widthFactor: 1,
-                      child: CustomButton(
-                        function: () {
-                          if (formKey.currentState!.validate()) {
-                            cubit.updateCurrentUser(
-                                firstName: firstNameCtrl.text,
-                                lastName: lastNameCtrl.text,
-                                email: emailCtrl.text,
-                                address: addressCtrl.text);
-                          }
-                        },
-                        child: state is UpdateProfileLoading ? Loading() : Text('Save Changes', style: getMediumStyle(color: ColorManager.white, fontSize: FontSize.f20),),
+                      FractionallySizedBox(
+                        widthFactor: 1,
+                        child: CustomButton(
+                          function: () {
+                            if (formKey.currentState!.validate()) {
+                              cubit.updateCurrentUser(
+                                  firstName: firstNameCtrl.text,
+                                  lastName: lastNameCtrl.text,
+                                  email: emailCtrl.text,
+                                  address: addressCtrl.text);
+                            }
+                          },
+                          child: state is UpdateProfileLoading ? Loading() : Text('Save Changes', style: getMediumStyle(color: ColorManager.white, fontSize: FontSize.f20),),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

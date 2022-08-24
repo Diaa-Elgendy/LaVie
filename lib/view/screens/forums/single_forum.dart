@@ -7,6 +7,8 @@ import 'package:la_vie/view/widgets/components.dart';
 import 'package:la_vie/view/widgets/empty_page.dart';
 import 'package:la_vie/view_model/forums_cubit/forums_cubit.dart';
 
+import '../../widgets/custom_scaffold.dart';
+
 class SingleForumScreen extends StatelessWidget {
   String forumTitle;
 
@@ -21,16 +23,18 @@ class SingleForumScreen extends StatelessWidget {
           ForumsCubit cubit = ForumsCubit.get(context);
           return Scaffold(
             appBar: AppBar(),
-            body: state is GetForumByTitleSuccess
-                ? cubit.forumByTitle!.data!.isNotEmpty? Padding(
-                  padding: const EdgeInsets.all(AppPadding.screenPadding),
-                  child: Column(
-                    children: [
-                      ForumItem(forumData: cubit.forumByTitle!.data![0]),
-                    ],
-                  ),
-                ) : EmptyPage(header: 'No Forum Found With This Name.')
-                :  Loading(color: ColorManager.primary)
+            body: CustomNetworkChecker(
+              child: state is GetForumByTitleSuccess
+                  ? cubit.forumByTitle!.data!.isNotEmpty? Padding(
+                    padding: const EdgeInsets.all(AppPadding.screenPadding),
+                    child: Column(
+                      children: [
+                        ForumItem(forumData: cubit.forumByTitle!.data![0]),
+                      ],
+                    ),
+                  ) : EmptyPage(header: 'No Forum Found With This Name.')
+                  :  Loading(color: ColorManager.primary),
+            )
           );
         },
       ),

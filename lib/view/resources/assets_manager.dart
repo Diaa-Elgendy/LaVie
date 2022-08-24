@@ -23,6 +23,7 @@ class AssetsManager{
   static const String cartDummy = 'assets/images/cart_dummy.png';
   static const String singleBlog = 'assets/images/single_blog.png';
   static const String likeIcon = 'assets/images/icons/like_icon.png';
+  static const String noInternetConnection = 'assets/images/no_internet_connection.png';
 
 
 

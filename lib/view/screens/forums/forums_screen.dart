@@ -7,6 +7,7 @@ import 'package:la_vie/view/resources/style_manager.dart';
 import 'package:la_vie/view/resources/values_manager.dart';
 import 'package:la_vie/view/screens/cart/cart_screen.dart';
 import 'package:la_vie/view/screens/forums/create_new_post_screen.dart';
+import 'package:la_vie/view/widgets/custom_scaffold.dart';
 import 'package:la_vie/view/widgets/forums_items.dart';
 import 'package:la_vie/view/screens/forums/single_forum.dart';
 import 'package:la_vie/view/widgets/components.dart';
@@ -35,10 +36,11 @@ class _ForumsScreenState extends State<ForumsScreen> {
       builder: (context, state) {
         ForumsCubit cubit = ForumsCubit.get(context);
         return Scaffold(
-            appBar: AppBar(
-              title: const Text('Forums'),
-            ),
-            body: ListView(
+          appBar: AppBar(
+            title: const Text('Forums'),
+          ),
+          body: CustomNetworkChecker(
+            child: ListView(
               padding: const EdgeInsets.all(AppPadding.screenPadding),
               children: [
                 //Search container
@@ -87,7 +89,6 @@ class _ForumsScreenState extends State<ForumsScreen> {
                                   widget: SingleForumScreen(
                                       forumTitle: searchCtrl.text));
                             }
-
                           },
                           icon: const Icon(
                             Icons.search,
@@ -153,10 +154,21 @@ class _ForumsScreenState extends State<ForumsScreen> {
                 ),
               ],
             ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => navigateTo(context: context, widget: CreateNewPostScreen()),
-          child: const Icon(Icons.add),
-        ),);
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () async {
+              final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CreateNewPostScreen(),
+                  ));
+              if (result) {
+                cubit.getAllForums();
+              }
+            },
+            child: const Icon(Icons.add),
+          ),
+        );
       },
     );
   }

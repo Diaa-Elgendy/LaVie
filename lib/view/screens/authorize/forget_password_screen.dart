@@ -60,14 +60,12 @@ class ForgetPasswordScreen extends StatelessWidget {
                     widthFactor: 1,
                     child: CustomButton(
                       function: () {
-                        //todo: Activate postForgetPassword
-
-                        navigateTo(
-                            context: context,
-                            widget: VerifyOTPScreen(email: emailCtrl.text));
-                        // if (formKey.currentState!.validate()) {
-                        //   cubit.postForgetPassword(email: emailCtrl.text);
-                        // }
+                        // navigateTo(
+                        //     context: context,
+                        //     widget: VerifyOTPScreen(email: emailCtrl.text));
+                        if (formKey.currentState!.validate()) {
+                          cubit.postForgetPassword(email: emailCtrl.text);
+                        }
                       },
                       child: state is ForgetPasswordLoading
                           ? Loading()

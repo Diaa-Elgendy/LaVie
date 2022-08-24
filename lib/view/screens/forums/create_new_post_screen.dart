@@ -11,6 +11,8 @@ import 'package:la_vie/view/widgets/custom_button.dart';
 import 'package:la_vie/view/widgets/custom_textfield.dart';
 import 'package:la_vie/view_model/forums_cubit/forums_cubit.dart';
 
+import '../../widgets/custom_scaffold.dart';
+
 class CreateNewPostScreen extends StatefulWidget {
   CreateNewPostScreen({Key? key}) : super(key: key);
 
@@ -33,7 +35,7 @@ class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
     return BlocConsumer<ForumsCubit, ForumsState>(
       listener: (context, state) {
         if (state is CreatePostSuccess) {
-          Navigator.pop(context);
+          Navigator.pop(context, true);
         }
       },
       builder: (context, state) {
@@ -42,92 +44,93 @@ class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
           appBar: AppBar(
             title: const Text('Create New Post'),
           ),
-          body: ListView(
-            padding: const EdgeInsets.all(AppPadding.screenPadding),
-            children: [
-              Center(
-                //Todo: if file.isEmpty show inkWell else Show Image
-                child: InkWell(
-                  onTap: () async {
-                    image = await imagePicker.pickImage(
-                        source: ImageSource.gallery);
-                    image64 = cubit.imageToBase64(image!);
-                  },
-                  child: Container(
-                    width: 140,
-                    height: 140,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: ColorManager.primary,
-                        width: 1,
+          body: CustomNetworkChecker(
+            child: ListView(
+              padding: const EdgeInsets.all(AppPadding.screenPadding),
+              children: [
+                Center(
+                  child: InkWell(
+                    onTap: () async {
+                      image = await imagePicker.pickImage(
+                          source: ImageSource.gallery);
+                      image64 = cubit.imageToBase64(image!);
+                    },
+                    child: Container(
+                      width: 140,
+                      height: 140,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: ColorManager.primary,
+                          width: 1,
+                        ),
                       ),
-                    ),
-                    child: image != null
-                        ? Image.file(
-                            File(
-                              image!.path,
-                            ),
-                            fit: BoxFit.cover,
-                          )
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.add,
-                                color: ColorManager.primary,
+                      child: image != null
+                          ? Image.file(
+                              File(
+                                image!.path,
                               ),
-                              Space(),
-                              Text(
-                                'Add Photo',
-                                style: getRegularStyle(
-                                    fontSize: FontSize.f14,
-                                    color: ColorManager.primary),
-                              )
-                            ],
-                          ),
+                              fit: BoxFit.cover,
+                            )
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.add,
+                                  color: ColorManager.primary,
+                                ),
+                                Space(),
+                                Text(
+                                  'Add Photo',
+                                  style: getRegularStyle(
+                                      fontSize: FontSize.f14,
+                                      color: ColorManager.primary),
+                                )
+                              ],
+                            ),
+                    ),
                   ),
                 ),
-              ),
-              Space(height: 50),
-              Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    CustomTextField(controller: titleCtrl, label: 'Title'),
-                    Space(height: 30),
-                    CustomTextField(
-                      controller: descriptionCtrl,
-                      label: 'Description',
-                      maxLines: 8,
-                    ),
-                    Space(height: 50),
-                    FractionallySizedBox(
-                      widthFactor: 1,
-                      child: CustomButton(
-                        function: () {
-                          if (formKey.currentState!.validate()) {
-                            cubit.createNewPost(
-                              title: titleCtrl.text,
-                              description: descriptionCtrl.text,
-                              image64: image64 ?? '',
-                              context: context,
-                            );
-                          }
-                        },
-                        child: state is CreatePostLoading
-                            ? Loading()
-                            : Text(
-                                'Post',
-                                style: getMediumStyle(
-                                    color: ColorManager.white,
-                                    fontSize: FontSize.f18),
-                              ),
+                Space(height: 50),
+                Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      CustomTextField(controller: titleCtrl, label: 'Title'),
+                      Space(height: 30),
+                      CustomTextField(
+                        controller: descriptionCtrl,
+                        label: 'Description',
+                        maxLines: 8,
                       ),
-                    ),
-                  ],
+                      Space(height: 50),
+                      FractionallySizedBox(
+                        widthFactor: 1,
+                        child: CustomButton(
+                          function: () {
+                            if (formKey.currentState!.validate()) {
+                              cubit.createNewPost(
+                                title: titleCtrl.text,
+                                description: descriptionCtrl.text,
+                                image64: image64 ?? '',
+                                context: context,
+                              );
+                            }
+                          },
+                          child: state is! CreatePostLoading
+                              ? Text(
+                                  'Post',
+                                  style: getMediumStyle(
+                                      color: ColorManager.white,
+                                      fontSize: FontSize.f18),
+                                )
+                              : Loading(),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

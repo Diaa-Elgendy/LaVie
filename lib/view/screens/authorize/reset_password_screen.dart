@@ -59,7 +59,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   Space(height: 30),
                   RichText(
                     text: TextSpan(
-                        text: "Enter your new password for ",
+                        text: "Enter Your New Password.",
                         children: [
                           TextSpan(
                               text: widget.email,
@@ -76,7 +76,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       children: [
 
                         CustomTextField(
-                            controller: passwordCtrl, label: 'Password'),
+                            controller: passwordCtrl, label: 'New Password'),
 
                       ],
                     ),
@@ -87,7 +87,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       Expanded(
                         child: CustomButton(
                           function: () {
-                            //todo: Activate postResetPassword
                             if (formKey.currentState!.validate()) {
                               cubit.postResetPassword(email: widget.email, otp: widget.otp, password: passwordCtrl.text);
                             }

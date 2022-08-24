@@ -61,14 +61,14 @@ class LoginScreen extends StatelessWidget {
                   FractionallySizedBox(
                     widthFactor: 1,
                     child: CustomButton(
-                      child: state is LoginLoading
-                          ? Loading()
-                          : Text(
+                      child: state is! LoginLoading
+                          ? Text(
                               'Login',
                               style: getMediumStyle(
                                   color: ColorManager.white,
                                   fontSize: FontSize.f18),
-                            ),
+                            )
+                          : Loading(),
                       function: () {
                         if (loginFormKey.currentState!.validate()) {
                           cubit.postLogin(
@@ -81,9 +81,6 @@ class LoginScreen extends StatelessWidget {
                   Space(height: 10),
                   TextButton(
                     onPressed: () {
-                      // navigateTo(
-                      //     context: context,
-                      //     widget:  ForgetPasswordScreen());
                       navigateTo(
                           context: context, widget: ForgetPasswordScreen());
                     },
@@ -122,7 +119,8 @@ class LoginScreen extends StatelessWidget {
                           cubit.getGoogleAccount().then((value) {
                             final currentUser =
                                 FirebaseAuth.instance.currentUser;
-                            List<String> userName = currentUser!.displayName!.split(' ');
+                            List<String> userName =
+                                currentUser!.displayName!.split(' ');
                             cubit.postGoogleSignIn(
                                 email: currentUser.email ?? '',
                                 id: currentUser.uid,

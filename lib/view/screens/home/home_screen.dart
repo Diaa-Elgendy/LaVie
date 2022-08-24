@@ -9,6 +9,7 @@ import 'package:la_vie/view/resources/values_manager.dart';
 import 'package:la_vie/view/screens/buy_plant/buy_plant.dart';
 import 'package:la_vie/view/screens/cart/cart_screen.dart';
 import 'package:la_vie/view/screens/forums/forums_screen.dart';
+import 'package:la_vie/view/widgets/custom_scaffold.dart';
 import 'package:la_vie/view/widgets/home_card_item.dart';
 import 'package:la_vie/view/widgets/components.dart';
 import 'package:la_vie/view/widgets/custom_choice_chip.dart';
@@ -35,39 +36,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchCtrl = TextEditingController();
 
-  List<String> chipsTitle = [
-    'All',
-    'Plants',
-    'Seeds',
-    'Tools',
-  ];
-  List<bool> chipsSelected = [
-    true,
-    false,
-    false,
-    false,
-  ];
-
-  List<Product> filteredList = [];
-  String filter = 'ALL';
-  int filterLength = 0;
-
-  bool isExamAvailable = false;
-  @override
-  void initState() {
-    print('object');
-    DateTime currentDate = DateTime.now();
-    String lastDate = CacheHelper.getData(CacheManager.lastDateExam) ?? '';
-    print(CacheHelper.getData(CacheManager.lastDateExam) ?? 'null');
-    print(currentDate.difference(DateTime.parse(lastDate)).inDays);
-    if(currentDate.difference(DateTime.parse(lastDate)).inDays < 7){
-      isExamAvailable = false;
-    }
-    else{
-      isExamAvailable = true;
-    }
-    super.initState();
-  }
   @override
   void dispose() {
     searchCtrl.dispose();
@@ -76,22 +44,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //var cubit = BlocProvider.of<HomeCubit>(context,listen: true);
-    show('User Token:: ${StringManager.userToken}');
-    return BlocProvider(
-      create: (context) => HomeCubit()..getProducts(),
-      child: BlocConsumer<HomeCubit, HomeState>(
-        listener: (context, state) {
-          if (state is GetProductsSuccess) {
-            filterLength = state.productsModel.products!.length;
-            filteredList.addAll(state.productsModel.products!);
-          }
-        },
-        builder: (context, state) {
-          HomeCubit cubit = BlocProvider.of(context);
+    HomeCubit cubit = BlocProvider.of(context);
 
-          return Scaffold(
-            body: state is GetProductsSuccess
+    return BlocConsumer<HomeCubit, HomeState>(
+      listener: (context, state) {
+        if (state is GetProductsSuccess) {
+          cubit.filterLength = state.productsModel.products!.length;
+          cubit.filteredList.addAll(state.productsModel.products!);
+        }
+      },
+      builder: (context, state) {
+
+        return Scaffold(
+          body: CustomNetworkChecker(
+            child: state is GetProductsSuccess
                 ? cubit.productsModel!.products!.isNotEmpty
                     ? SafeArea(
                         child: ListView(
@@ -126,24 +92,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                           constraints: const BoxConstraints(),
                                         ),
                                       ),
-                                      cubit.isExamAvailable ?
-                                      Card(
-                                        shape: const CircleBorder(),
-                                        elevation: AppSize.elevation,
-                                        color: ColorManager.greyLight,
-                                        child: IconButton(
-                                          padding: const EdgeInsets.all(5),
-                                          onPressed: () {
-                                            navigateTo(
-                                                context: context,
-                                                widget: const ExamScreen());
-                                          },
-                                          icon: const Icon(
-                                              Icons.question_mark_outlined,
-                                              size: 18),
-                                          constraints: const BoxConstraints(),
-                                        ),
-                                      ) : const SizedBox()
+                                      cubit.isExamAvailable
+                                          ? Card(
+                                              shape: const CircleBorder(),
+                                              elevation: AppSize.elevation,
+                                              color: ColorManager.greyLight,
+                                              child: IconButton(
+                                                padding:
+                                                    const EdgeInsets.all(5),
+                                                onPressed: () async {
+                                                  final result = await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) => const ExamScreen()),
+                                                  );
+                                                  if (result == true) {
+                                                    setState(() {
+                                                      cubit.isExamAvailable =
+                                                          false;
+                                                    });
+                                                  }
+                                                },
+                                                icon: const Icon(
+                                                    Icons
+                                                        .question_mark_outlined,
+                                                    size: 18),
+                                                constraints:
+                                                    const BoxConstraints(),
+                                              ),
+                                            )
+                                          : const SizedBox()
                                     ],
                                   ),
                                 ),
@@ -257,105 +235,105 @@ class _HomeScreenState extends State<HomeScreen> {
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
                                   return CustomChoiceChip(
-                                    text: chipsTitle[index],
-                                    isSelected: chipsSelected[index],
+                                    text: cubit.chipsTitle[index],
+                                    isSelected: cubit.chipsSelected[index],
                                     onSelected: () {
                                       setState(() {
-                                        filteredList.clear();
+                                        cubit.filteredList.clear();
                                         if (index == 0) {
-                                          chipsSelected = [
+                                          cubit.chipsSelected = [
                                             true,
                                             false,
                                             false,
                                             false
                                           ];
-                                          filterLength = 0;
+                                          cubit.filterLength = 0;
 
-                                          filter = 'ALL';
-                                          filteredList.addAll(
+                                          cubit.filter = 'ALL';
+                                          cubit.filteredList.addAll(
                                               cubit.productsModel!.products!);
 
-                                          filterLength = cubit
+                                          cubit.filterLength = cubit
                                               .productsModel!.products!.length;
                                         } else if (index == 1) {
-                                          chipsSelected = [
+                                          cubit.chipsSelected = [
                                             false,
                                             true,
                                             false,
                                             false
                                           ];
-                                          filterLength = 0;
-                                          filter = 'PLANT';
+                                          cubit.filterLength = 0;
+                                          cubit.filter = 'PLANT';
                                           for (int i = 0;
                                               i <
                                                   cubit.productsModel!.products!
                                                       .length;
                                               i++) {
-                                            if (filter ==
+                                            if (cubit.filter ==
                                                 cubit.productsModel!
                                                     .products![i].type) {
-                                              filteredList.add(cubit
+                                              cubit.filteredList.add(cubit
                                                   .productsModel!.products![i]);
-                                              filterLength++;
+                                              cubit.filterLength++;
                                             }
                                           }
                                         } else if (index == 2) {
-                                          chipsSelected = [
+                                          cubit.chipsSelected = [
                                             false,
                                             false,
                                             true,
                                             false
                                           ];
-                                          filterLength = 0;
+                                          cubit.filterLength = 0;
 
-                                          filter = 'SEED';
+                                          cubit.filter = 'SEED';
                                           for (int i = 0;
                                               i <
                                                   cubit.productsModel!.products!
                                                       .length;
                                               i++) {
-                                            if (filter ==
+                                            if (cubit.filter ==
                                                 cubit.productsModel!
                                                     .products![i].type) {
-                                              filteredList.add(cubit
+                                              cubit.filteredList.add(cubit
                                                   .productsModel!.products![i]);
 
-                                              filterLength++;
+                                              cubit.filterLength++;
                                             }
                                           }
                                         } else if (index == 3) {
-                                          chipsSelected = [
+                                          cubit.chipsSelected = [
                                             false,
                                             false,
                                             false,
                                             true
                                           ];
-                                          filterLength = 0;
+                                          cubit.filterLength = 0;
 
-                                          filter = 'TOOL';
+                                          cubit.filter = 'TOOL';
                                           for (int i = 0;
                                               i <
                                                   cubit.productsModel!.products!
                                                       .length;
                                               i++) {
-                                            if (filter ==
+                                            if (cubit.filter ==
                                                 cubit.productsModel!
                                                     .products![i].type) {
-                                              filteredList.add(cubit
+                                              cubit.filteredList.add(cubit
                                                   .productsModel!.products![i]);
 
-                                              filterLength++;
+                                              cubit.filterLength++;
                                             }
                                           }
                                         }
 
-                                        print('sdasda $filterLength');
+                                        print('sdasda $cubit.filterLength');
                                       });
                                     },
                                   );
                                 },
                                 separatorBuilder: (context, index) => Space(),
-                                itemCount: chipsTitle.length,
+                                itemCount: cubit.chipsTitle.length,
                               ),
                             ),
                             Space(height: 30),
@@ -372,10 +350,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                             childAspectRatio: 3 / 4.2,
                                             crossAxisSpacing: 10,
                                             mainAxisSpacing: 10),
-                                    itemCount: filteredList.length,
+                                    itemCount: cubit.filteredList.length,
                                     itemBuilder: (BuildContext ctx, index) {
                                       return HomeCard(
-                                          data: filteredList[index]);
+                                          data: cubit.filteredList[index]);
                                     })
                                 : Space(height: 0, width: 0),
                           ],
@@ -393,9 +371,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         title: 'Error while getting data',
                       ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

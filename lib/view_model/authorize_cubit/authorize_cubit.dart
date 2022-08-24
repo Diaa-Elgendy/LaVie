@@ -2,13 +2,11 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:la_vie/model/auth/facebook_model.dart';
 import 'package:la_vie/view/resources/color_manager.dart';
 import 'package:la_vie/view/resources/routes_manager.dart';
 import 'package:la_vie/view/screens/authorize/authorize_screen.dart';
 import 'package:la_vie/view_model/local_data/shared_pref/cache_helper.dart';
 import 'package:meta/meta.dart';
-
 import '../../model/auth/user_model.dart';
 import '../app/functions.dart';
 import '../dio_network/dio_exceptions.dart';
@@ -26,9 +24,10 @@ class AuthorizeCubit extends Cubit<AuthorizeState> {
 
   GoogleSignInAccount get user => _user!;
 
+  //Todo: Continue implementing Facebook Login
   // AccessToken? accessToken;
   //
-  // Future<void> signIN() asyn§c {
+  // Future<void> signIN() async {
   //   final LoginResult result = await FacebookAuth.i.login();
   //
   //   if (result.status == LoginStatus.success) {
