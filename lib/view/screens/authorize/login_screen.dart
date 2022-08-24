@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:la_vie/view/resources/assets_manager.dart';
@@ -28,8 +29,10 @@ class LoginScreen extends StatelessWidget {
     return BlocConsumer<AuthorizeCubit, AuthorizeState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          CacheHelper.putData(CacheManager.accessToken, state.userModel.data!.accessToken);
-          CacheHelper.putData(CacheManager.refreshToken, state.userModel.data!.refreshToken);
+          CacheHelper.putData(
+              CacheManager.accessToken, state.userModel.data!.accessToken);
+          CacheHelper.putData(
+              CacheManager.refreshToken, state.userModel.data!.refreshToken);
           StringManager.userToken = state.userModel.data!.accessToken!;
           show("Token: ${StringManager.userToken}");
           navigateAndFinish(context, const NavigationScreen());
@@ -81,8 +84,8 @@ class LoginScreen extends StatelessWidget {
                       // navigateTo(
                       //     context: context,
                       //     widget:  ForgetPasswordScreen());
-                      navigateTo(context: context, widget: ForgetPasswordScreen());
-
+                      navigateTo(
+                          context: context, widget: ForgetPasswordScreen());
                     },
                     child: Text(
                       'Forget Password?',
@@ -115,7 +118,19 @@ class LoginScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          cubit.getGoogleAccount().then((value) {
+                            final currentUser =
+                                FirebaseAuth.instance.currentUser;
+                            List<String> userName = currentUser!.displayName!.split(' ');
+                            cubit.postGoogleSignIn(
+                                email: currentUser.email ?? '',
+                                id: currentUser.uid,
+                                pictureUrl: currentUser.photoURL ?? '',
+                                firstName: userName[0] ?? '',
+                                lastName: userName[1] ?? '');
+                          });
+                        },
                         icon: Image.asset(AssetsManager.googleLogo),
                       ),
                       Space(),

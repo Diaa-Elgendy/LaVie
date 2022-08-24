@@ -3,11 +3,9 @@ import 'package:la_vie/view_model/app/functions.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
-
-
   late Database database;
 
-  void createDatabase() {
+  void createDatabase() async {
     openDatabase(
       'database.db',
       version: 1,
@@ -15,7 +13,7 @@ class DatabaseHelper {
         show('Database created');
         database
             .execute(
-            'CREATE TABLE cart (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, productId TEXT, name TEXT, imageUrl TEXT, count INTEGER, price INTEGER)')
+                'CREATE TABLE cart (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, productId TEXT, name TEXT, imageUrl TEXT, count INTEGER, price INTEGER)')
             .then((value) {
           show('Table cart created Successfully');
         }).catchError((error) {
@@ -24,7 +22,6 @@ class DatabaseHelper {
       },
       onOpen: (database) {
         getDataFormDatabase(database);
-        show('database opened');
       },
     ).then((value) {
       database = value;
@@ -35,7 +32,7 @@ class DatabaseHelper {
     return await database.transaction((txn) async {
       txn
           .rawInsert(
-          'INSERT INTO cart (productId, name, imageUrl, count, price) VALUES ("${cartModel.productId}", "${cartModel.name}", "${cartModel.image}", "${cartModel.count}", "${cartModel.price}")')
+              'INSERT INTO cart (productId, name, imageUrl, count, price) VALUES ("${cartModel.productId}", "${cartModel.name}", "${cartModel.image}", "${cartModel.count}", "${cartModel.price}")')
           .then((value) {
         show("$value inserted successfully");
         getDataFormDatabase(database);

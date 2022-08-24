@@ -4,6 +4,8 @@ class EndPoint {
 
   //Authorize
   static const String login = '/api/v1/auth/signin';
+  static const String googleLogin = '/api/v1/auth/google';
+  static const String facebookLogin = '/api/v1/auth/facebook';
   static const String signUp = '/api/v1/auth/signup';
   static const String forgetPassword = '/api/v1/auth/forget-password';
   static const String verifyOTP = '/api/v1/auth/verify-otp';

@@ -1,11 +1,13 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:la_vie/model/auth/facebook_model.dart';
 import 'package:la_vie/view/resources/color_manager.dart';
-import 'package:la_vie/view/resources/font_manager.dart';
-import 'package:la_vie/view/resources/style_manager.dart';
-import 'package:la_vie/view/resources/values_manager.dart';
-import 'package:la_vie/view/widgets/components.dart';
+import 'package:la_vie/view/resources/routes_manager.dart';
+import 'package:la_vie/view/screens/authorize/authorize_screen.dart';
+import 'package:la_vie/view_model/local_data/shared_pref/cache_helper.dart';
 import 'package:meta/meta.dart';
 
 import '../../model/auth/user_model.dart';
@@ -18,6 +20,73 @@ part 'authorize_state.dart';
 
 class AuthorizeCubit extends Cubit<AuthorizeState> {
   AuthorizeCubit() : super(AuthorizeInitial());
+
+  final googleSignIn = GoogleSignIn();
+
+  GoogleSignInAccount? _user;
+
+  GoogleSignInAccount get user => _user!;
+
+  AccessToken? accessToken;
+
+  Future<void> signIN() async {
+    final LoginResult result = await FacebookAuth.i.login();
+
+    if (result.status == LoginStatus.success) {
+      accessToken = result.accessToken;
+      await FacebookAuth.i.getUserData();
+
+      final data = await FacebookAuth.i.getUserData();
+      show(data);
+      FacebookModel facebookModel = FacebookModel.fromJson(data);
+    }
+  }
+
+
+
+  Future getGoogleAccount() async {
+    final googleUser = await googleSignIn.signIn();
+    if (googleUser == null) {
+      return;
+    }
+    _user = googleUser;
+
+    final googleAuth = await googleUser.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    await FirebaseAuth.instance.signInWithCredential(credential);
+    emit(GoogleGetUserData());
+  }
+
+  Future postGoogleSignIn(
+      {required String email,
+      required String id,
+      required String pictureUrl,
+      required String firstName,
+      required String lastName}) async {
+    emit(LoginLoading());
+
+    return await DioHelper.postData(
+      endPoint: EndPoint.googleLogin,
+      data: {
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'id': id,
+        'picture': pictureUrl,
+      },
+    ).then((value) {
+      UserModel userModel = UserModel.fromJson(value.data);
+      show(value.data);
+
+      emit(LoginSuccess(userModel));
+    }).catchError((error) {
+      emit(LoginFailed(error));
+    });
+  }
 
   Future postSignUp(
       {required String email,
@@ -107,5 +176,11 @@ class AuthorizeCubit extends Cubit<AuthorizeState> {
     }).catchError((error) {
       emit(ResetPasswordFailed(error));
     });
+  }
+
+  void signOut(BuildContext context) {
+    FirebaseAuth.instance.signOut();
+    CacheHelper.clearData();
+    navigateAndFinish(context, const AuthorizeScreen());
   }
 }

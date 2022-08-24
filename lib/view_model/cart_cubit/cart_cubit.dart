@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:bloc/bloc.dart';
 import 'package:la_vie/model/cart/cart_model.dart';
 import 'package:meta/meta.dart';
@@ -19,26 +17,21 @@ class CartCubit extends Cubit<CartState> {
 
   //todo: Apply SQLite in cart
   Future<void> addToCart(CartModel model) async {
-    bool found = true;
+    bool isItemAdded = false;
 
-    insertIntoDatabase(cartModel: model).then((value) => GetDataFromDatabase());
-
-    // if (cart.isEmpty) {
-    //   insertIntoDatabase(cartModel: model);
-    //   print('first');
-    // } else {
-    //   for (int i = 0; i < cart.length; i++) {
-    //     if (model.productId == cart[i].productId){
-    //       updateProductCountFromDatabase(model.productId, model.count);
-    //       break;
-    //     }
-    //   }
-    //   if (found == true) {
-    //     cart.add(model);
-    //     found = false;
-    //   }
-    // }
-    getTotalPrice();
+    for (int i = 0; i < cart.length; i++) {
+      if (model.productId == cart[i].productId) {
+        updateProductCountFromDatabase(
+            model.productId, cart[i].count + model.count);
+        show('Old Record Updated');
+        isItemAdded = true;
+      }
+    }
+    if (isItemAdded == false || cart.isEmpty) {
+      insertIntoDatabase(cartModel: model);
+      isItemAdded = true;
+    }
+    print('lentht jere: ${cart.length}');
     emit(CartItemAdded());
   }
 
@@ -52,12 +45,13 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-  Future<void> getTotalPrice() async {
+  void getTotalPrice() {
     totalPrice = 0;
 
-    for (int i = 0; i < cart.length; i++) {
-      totalPrice += cart[i].price * cart[i].count;
-    }
+    cart.forEach((element) {
+      print('${element.count} ${element.price} ');
+      totalPrice += element.price * element.count;
+    });
   }
 
   void changeCount(String id, int count) {
@@ -76,13 +70,11 @@ class CartCubit extends Cubit<CartState> {
       'database.db',
       version: 1,
       onCreate: (database, version) {
-        show('Database created');
         database
             .execute(
                 'CREATE TABLE cart (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, productId TEXT, name TEXT, imageUrl TEXT, count INTEGER, price INTEGER)')
-            .then((value) {
-          show('Table cart created Successfully');
-        }).catchError((error) {
+            .then((value) {})
+            .catchError((error) {
           show("Error while creating table ${error.toString()}");
         });
       },
@@ -121,17 +113,15 @@ class CartCubit extends Cubit<CartState> {
             price: element['price'],
             count: element['count']));
       });
-        print(value);
+      getTotalPrice();
     });
     emit(GetDataFromDatabase());
-    print('Cart Length: ${cart.length}');
   }
 
   void updateProductCountFromDatabase(String id, int count) {
     database.rawUpdate('UPDATE cart SET count = ? WHERE productId = ?',
         ['$count', id]).then((value) {
       getDataFormDatabase(database);
-      show("Update Completed");
     });
   }
 
@@ -146,7 +136,6 @@ class CartCubit extends Cubit<CartState> {
   void clearDatabase() {
     database.rawDelete('DELETE FROM cart').then((value) {
       getDataFormDatabase(database);
-      print('database Cleared');
       show("Delete Completed");
     });
   }

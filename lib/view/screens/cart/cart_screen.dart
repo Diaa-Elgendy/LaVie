@@ -33,7 +33,7 @@ class _CartScreenState extends State<CartScreen> {
               actions: [
                 IconButton(
                   onPressed: () {
-                    //cubit.clearDatabase();
+                    cubit.clearDatabase();
                   },
                   icon: const Icon(
                     Icons.delete_forever,

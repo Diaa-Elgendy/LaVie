@@ -26,6 +26,9 @@ dependencies:
   shared_preferences: ^2.0.15
   image_picker: ^0.8.5+3
   sqflite: ^2.0.3+1
+  firebase_auth: ^3.6.4
+  google_sign_in: ^5.4.1
+  flutter_facebook_auth: ^4.4.1
   #qr_code_scanner: ^1.0.1
 
 

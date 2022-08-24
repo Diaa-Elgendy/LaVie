@@ -70,46 +70,52 @@ class _CartItemState extends State<CartItem> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(AppSize.borderRadius),
-                                color: ColorManager.greyLight,
-                              ),
-                              child: Row(
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                        if (widget.model.count > 1) {
-                                          widget.model.count--;
-                                        }
-                                        cubit.changeCount(widget.model.productId, widget.model.count);
-                                    },
-                                    icon: const Icon(
-                                      Icons.remove,
-                                      color: ColorManager.primary,
-                                      size: 18,
+                            Expanded(
+                              child: Container(
+                                height: 35,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(AppSize.borderRadius),
+                                  color: ColorManager.greyLight,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    IconButton(
+                                      padding: EdgeInsets.zero,
+                                      onPressed: () {
+                                          if (widget.model.count > 1) {
+                                            widget.model.count--;
+                                          }
+                                          cubit.changeCount(widget.model.productId, widget.model.count);
+                                      },
+                                      icon: const Icon(
+                                        Icons.remove,
+                                        color: ColorManager.primary,
+                                        size: 14,
+                                      ),
+                                      constraints: const BoxConstraints(),
                                     ),
-                                    constraints: BoxConstraints(),
-                                  ),
-                                  Text(
-                                    ' ${widget.model.count} ',
-                                    style:
-                                        getMediumStyle(fontSize: FontSize.f14),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                        widget.model.count++;
-                                        cubit.changeCount(widget.model.productId, widget.model.count);
-                                    },
-                                    icon: const Icon(
-                                      Icons.add,
-                                      color: ColorManager.primary,
-                                      size: 18,
+                                    Text(
+                                      '${widget.model.count}',
+                                      style:
+                                          getMediumStyle(fontSize: FontSize.f14),
                                     ),
-                                    constraints: BoxConstraints(),
-                                  ),
-                                ],
+                                    IconButton(
+                                      padding: EdgeInsets.zero,
+                                      onPressed: () {
+                                          widget.model.count++;
+                                          cubit.changeCount(widget.model.productId, widget.model.count);
+                                      },
+                                      icon: const Icon(
+                                        Icons.add,
+                                        color: ColorManager.primary,
+                                        size: 14,
+                                      ),
+                                      constraints: BoxConstraints(),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             IconButton(

@@ -63,3 +63,14 @@ class ResetPasswordFailed extends AuthorizeState {
     Exceptions(error);
   }
 }
+
+class GoogleGetUserData extends AuthorizeState {}
+class GoogleLoginLoading extends AuthorizeState {}
+class GoogleLoginSuccess extends AuthorizeState {}
+class GoogleLoginFailed extends AuthorizeState {
+  var error;
+
+  GoogleLoginFailed(this.error){
+    Exceptions(error);
+  }
+}

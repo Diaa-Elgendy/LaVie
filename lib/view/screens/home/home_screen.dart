@@ -205,19 +205,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                           top: -15, end: -10),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                            color: ColorManager.primary,
-                                            borderRadius: BorderRadius.circular(
-                                                AppSize.borderRadius)),
+                                          color: ColorManager.primary,
+                                          borderRadius: BorderRadius.circular(
+                                            AppSize.borderRadius,
+                                          ),
+                                        ),
                                         child: IconButton(
                                           onPressed: () {
                                             navigateTo(
-                                                context: context,
-                                                widget: const CartScreen());
+                                              context: context,
+                                              widget: const CartScreen(),
+                                            );
                                           },
                                           icon: const ImageIcon(
-                                              AssetImage(
-                                                  AssetsManager.cartIcon),
-                                              color: ColorManager.white),
+                                            AssetImage(AssetsManager.cartIcon),
+                                            color: ColorManager.white,
+                                          ),
                                         ),
                                       ),
                                     );
