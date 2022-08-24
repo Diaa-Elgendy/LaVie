@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:la_vie/model/auth/facebook_model.dart';
 import 'package:la_vie/view/resources/color_manager.dart';
@@ -27,20 +26,20 @@ class AuthorizeCubit extends Cubit<AuthorizeState> {
 
   GoogleSignInAccount get user => _user!;
 
-  AccessToken? accessToken;
-
-  Future<void> signIN() async {
-    final LoginResult result = await FacebookAuth.i.login();
-
-    if (result.status == LoginStatus.success) {
-      accessToken = result.accessToken;
-      await FacebookAuth.i.getUserData();
-
-      final data = await FacebookAuth.i.getUserData();
-      show(data);
-      FacebookModel facebookModel = FacebookModel.fromJson(data);
-    }
-  }
+  // AccessToken? accessToken;
+  //
+  // Future<void> signIN() asyn§c {
+  //   final LoginResult result = await FacebookAuth.i.login();
+  //
+  //   if (result.status == LoginStatus.success) {
+  //     accessToken = result.accessToken;
+  //     await FacebookAuth.i.getUserData();
+  //
+  //     final data = await FacebookAuth.i.getUserData();
+  //     show(data);
+  //     FacebookModel facebookModel = FacebookModel.fromJson(data);
+  //   }
+  // }
 
 
 

@@ -3,6 +3,8 @@ import 'package:la_vie/view/resources/style_manager.dart';
 import 'package:la_vie/view/resources/values_manager.dart';
 import 'package:la_vie/view/widgets/components.dart';
 import 'package:la_vie/view_model/app/functions.dart';
+import 'package:la_vie/view_model/local_data/shared_pref/cache_helper.dart';
+import 'package:la_vie/view_model/local_data/shared_pref/cache_manager.dart';
 
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -59,6 +61,7 @@ class _ExamScreenState extends State<ExamScreen> {
         correctAnswer:
         'The user experience is the attitude the UX designer has about a product. 44')
   ];
+
   int currentIndex = 0;
   int totalScore = 0;
   bool isPreviousCorrect = false;
@@ -246,13 +249,17 @@ class _ExamScreenState extends State<ExamScreen> {
                               if(currentIndex == exam.length) {
                                 currentIndex--;
                                 showSnackBar('Exam Complete, You hit $totalScore correct answers out of ${exam.length}', context);
+                                DateTime lastExamDate = DateTime.now();
+                                CacheHelper.putData(CacheManager.lastDateExam, lastExamDate.toString());
+                                print(CacheHelper.getData(CacheManager.lastDateExam));
+                                //DateTime currentDate = DateTime.now().add(const Duration(days: 6));
+                                //print(currentDate.difference(lastExamDate).inDays);
                                 Navigator.pop(context);
                               }
                               setState(() {
 
                               });
 
-                              print(currentIndex);
                             },
                             text: nextButton,
                             fontSize: FontSize.f16,

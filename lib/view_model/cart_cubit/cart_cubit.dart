@@ -31,7 +31,6 @@ class CartCubit extends Cubit<CartState> {
       insertIntoDatabase(cartModel: model);
       isItemAdded = true;
     }
-    print('lentht jere: ${cart.length}');
     emit(CartItemAdded());
   }
 
@@ -49,7 +48,6 @@ class CartCubit extends Cubit<CartState> {
     totalPrice = 0;
 
     cart.forEach((element) {
-      print('${element.count} ${element.price} ');
       totalPrice += element.price * element.count;
     });
   }

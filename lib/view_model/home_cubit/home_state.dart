@@ -27,36 +27,4 @@ class GetProductsFailed extends HomeState {
   }
 }
 
-// class GetPlantLoading extends HomeState {}
-// class GetPlantSuccess extends HomeState {}
-// class GetPlantFailed extends HomeState {
-//   var error;
-//
-//   GetPlantFailed(this.error){
-//     Exceptions(error);
-//   }
-// }
-//
-// class GetSeedsLoading extends HomeState {}
-// class GetSeedsSuccess extends HomeState {}
-// class GetSeedsFailed extends HomeState {
-//   var error;
-//
-//   GetSeedsFailed(this.error){
-//     Exceptions(error);
-//   }
-// }
-//
-// class GetToolsLoading extends HomeState {}
-// class GetToolsSuccess extends HomeState {}
-// class GetToolsFailed extends HomeState {
-//   var error;
-//
-//   GetToolsFailed(this.error){
-//     Exceptions(error);
-//   }
-// }
-
-
-//class HomeScreenSuccess extends HomeState {}
-
+class ShowExamChanged extends HomeState {}

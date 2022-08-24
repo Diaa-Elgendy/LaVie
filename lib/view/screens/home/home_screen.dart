@@ -16,6 +16,8 @@ import 'package:la_vie/view/widgets/empty_page.dart';
 import 'package:la_vie/view_model/app/functions.dart';
 import 'package:la_vie/view_model/cart_cubit/cart_cubit.dart';
 import 'package:la_vie/view_model/home_cubit/home_cubit.dart';
+import 'package:la_vie/view_model/local_data/shared_pref/cache_helper.dart';
+import 'package:la_vie/view_model/local_data/shared_pref/cache_manager.dart';
 
 import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
@@ -50,6 +52,22 @@ class _HomeScreenState extends State<HomeScreen> {
   String filter = 'ALL';
   int filterLength = 0;
 
+  bool isExamAvailable = false;
+  @override
+  void initState() {
+    print('object');
+    DateTime currentDate = DateTime.now();
+    String lastDate = CacheHelper.getData(CacheManager.lastDateExam) ?? '';
+    print(CacheHelper.getData(CacheManager.lastDateExam) ?? 'null');
+    print(currentDate.difference(DateTime.parse(lastDate)).inDays);
+    if(currentDate.difference(DateTime.parse(lastDate)).inDays < 7){
+      isExamAvailable = false;
+    }
+    else{
+      isExamAvailable = true;
+    }
+    super.initState();
+  }
   @override
   void dispose() {
     searchCtrl.dispose();
@@ -108,6 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           constraints: const BoxConstraints(),
                                         ),
                                       ),
+                                      cubit.isExamAvailable ?
                                       Card(
                                         shape: const CircleBorder(),
                                         elevation: AppSize.elevation,
@@ -124,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               size: 18),
                                           constraints: const BoxConstraints(),
                                         ),
-                                      ),
+                                      ) : const SizedBox()
                                     ],
                                   ),
                                 ),

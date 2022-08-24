@@ -127,8 +127,8 @@ class LoginScreen extends StatelessWidget {
                                 email: currentUser.email ?? '',
                                 id: currentUser.uid,
                                 pictureUrl: currentUser.photoURL ?? '',
-                                firstName: userName[0] ?? '',
-                                lastName: userName[1] ?? '');
+                                firstName: userName[0],
+                                lastName: userName[1]);
                           });
                         },
                         icon: Image.asset(AssetsManager.googleLogo),
