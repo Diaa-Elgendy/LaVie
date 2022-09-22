@@ -3,7 +3,7 @@
 ![repository-open-graph-template](https://user-images.githubusercontent.com/88054373/191556282-4d1cc8f1-8db9-4cb3-95a6-9531d310bdaf.png)
 
 
-E-commerce application for targeting users who are intersted in plants.
+E-commerce application for targeting users who are interested in plants.
 
 Connected with Rest API.
 
