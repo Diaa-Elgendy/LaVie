@@ -3,15 +3,30 @@
 ![repository-open-graph-template](https://user-images.githubusercontent.com/88054373/191556282-4d1cc8f1-8db9-4cb3-95a6-9531d310bdaf.png)
 
 
+La Vie (Orange Hackathon Project 2022)
+
 E-commerce application for targeting users who are interested in plants.
+Built with BLoC using MVVM architecture.
 
-Connected with Rest API.
+Features
+- Login, Create new account and signup with google
+- Reset password with OTP
+- View posted blogs
+- Marketplace to buy plants and farming products and see their details
+- Cart to save selected products in local database
+- View all notifications
+- Scan Plants QR code to earn points
+- New feeds (Forum Screen) and create new post, add likes and view comments
+- Weekly exam screen
+- View and edit user profile
+- Check internet connection and show if no internet connection
 
-Main Pubs used in developing: 
-  - BLoC using MVVM architecture
-  - Dio
-  - SQFlite for database
-  - Google Signin
+Main used packages
+- BLoC
+- QR Scanner
+- Dio
+- Flutter offline
+- Sqflite
 
 
 
